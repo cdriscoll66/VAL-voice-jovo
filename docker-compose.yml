@@ -1,0 +1,7 @@
+lambdabuildcontainer:
+  container_name: lambdabuildcontainer
+  build: ./private/docker
+  volumes:
+    - .:/dist
+  working_dir: /dist
+  entrypoint: /dist/private/docker/build.sh

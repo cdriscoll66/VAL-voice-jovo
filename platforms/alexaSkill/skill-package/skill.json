@@ -1,0 +1,55 @@
+{
+	"manifest": {
+		"apis": {
+			"custom": {
+				"endpoint": {
+					"sslCertificateType": "Wildcard",
+					"uri": "https://webhook.jovo.cloud/223943fc-0af5-4e70-af0a-7958278aa09f"
+				},
+				"interfaces": []
+			}
+		},
+		"manifestVersion": "1.0",
+		"privacyAndCompliance": {
+			"allowsPurchases": false,
+			"containsAds": false,
+			"isChildDirected": false,
+			"isExportCompliant": true,
+			"locales": {
+				"en-US": {
+					"privacyPolicyUrl": "https://www.valottery.com/vaprivacystatement.aspx"
+				}
+			},
+			"usesPersonalInfo": false
+		},
+		"publishingInformation": {
+			"category": "GAME_INFO_AND_ACCESSORY",
+			"distributionCountries": [
+				"US"
+			],
+			"isAvailableWorldwide": false,
+			"locales": {
+				"en-US": {
+					"description": "The skill returns essential Virginia Lottery draw-game information including last and next drawing dates and times, winning numbers and jackpot amounts. Information on games including Pick 3, Pick 4, Cash 5, Mega Millions and Powerball can be accessed easily and efficiently.",
+					"examplePhrases": [
+						"Alexa, ask Virginia Lottery what are the winning numbers for pick 4",
+						"Alexa, ask Virginia Lottery what is the powerball jackpot",
+						"Alexa, ask Virginia Lottery when is the next mega millions drawing"
+					],
+					"keywords": [
+						"Virginia",
+						"Lottery",
+						"games",
+						"chance",
+						"winning"
+					],
+					"largeIconUri": "https://s3.amazonaws.com/CAPS-SSE/echo_developer/5e92/eecd9a8c854a424b9d5c32a29a2569a3/APP_ICON_LARGE?versionId=qZSPBFi2ZCaPa_ISTsLKObTItxxe.Jwl&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Date=20201014T202310Z&X-Amz-SignedHeaders=host&X-Amz-Expires=86400&X-Amz-Credential=AKIAWBV6LQ4QHAYALYJ7%2F20201014%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Signature=4e3c895fc52a32743916ad6f23ec90d169e4e6e9924360191764a3b941de4ac4",
+					"name": "Virginia Lottery",
+					"smallIconUri": "https://s3.amazonaws.com/CAPS-SSE/echo_developer/a60a/2a9e391adf3b4f78bb029502c3b8789d/APP_ICON?versionId=sOAqj18PazXfPSqu84kMolyBjzWy_DNs&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Date=20201014T202310Z&X-Amz-SignedHeaders=host&X-Amz-Expires=86400&X-Amz-Credential=AKIAWBV6LQ4QHAYALYJ7%2F20201014%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Signature=df6c85ea49fc887ea170337a7545141b435055c63ef47aa0d81c5e3535acc298",
+					"summary": "Virginia Lottery draw-game information including drawing dates and times, winning numbers and jackpot amounts for games from Pick 3 to Mega Millions."
+				}
+			},
+			"testingInstructions": "This skill returns basic information about lottery games. Specifically you can get last and next drawing dates, winning numbers and jackpot amounts.\n\nThis is a linear voice skill. There are no conversation paths that require certain input to trigger. \n\nAsk Virginia Lottery for Help - gives a brief summary of the skill and an example invocation\nAsk Virginia Lottery for Raffle Info - returns the number of raffle tickets left as of a date\nAsk Virginia Lottery for the Mega Millions Jackpot - return the jockpot amount\nAsk Virginia Lottery for the Powerball Jackpot - return the jockpot amount\nAsk Virginia Lottery for the pick four Jackpot - this will tell you that jackpots are only available for certain games\nAsk Virginia Lottery for the winning numbers for pick four - will return the winning numbers for pick four\nAsk Virginia Lottery when is the next drawing for cash five - will give the dates and times drawings are held"
+		}
+	}
+}
