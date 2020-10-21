@@ -47,6 +47,8 @@ const lotteryData = require("./data.js");
 // App Logic
 // =================================================================================
 
+let today = new Date();
+
 app.setHandler({
   LAUNCH() {
     let speech = this.t("LAUNCH_SPEECH");
@@ -152,7 +154,6 @@ app.setHandler({
       );
     } else if (this.$inputs.lotteryGame.id == "cash5") {
       // Temporary check to go live at correct date - remove after date.
-      let today = new Date();
       let activateDate = new Date("October 26, 2020 00:00:01");
       if (today <= activateDate) {
         this.tell(
@@ -204,7 +205,6 @@ app.setHandler({
       if (false !== data) {
         let speech = this.speechBuilder()
           .addT("NUMBERS_POWERBALL", data)
-
           .addT(holidayStinger());
         this.tell(speech);
       } else {
@@ -260,7 +260,6 @@ app.setHandler({
       this.$inputs.lotteryGame.id == "pick4" ||
       this.$inputs.lotteryGame.id == "pick3"
     ) {
-      console.log("check1");
       let gameName = this.$inputs.lotteryGame.id;
       let responseKey,
         speechResponse = "";
@@ -268,7 +267,6 @@ app.setHandler({
         case "cash5":
           responseKey = "cash5";
                 // Temporary check to go live at correct date - remove after date.
-          let today = new Date();
           let activateDate = new Date("October 26, 2020 23:00:01");
           if (today <= activateDate) {
             speechResponse = "NUMBERS_CASH5";
@@ -341,10 +339,10 @@ app.setHandler({
     // init speech
     let speech = this.speechBuilder();
 
-    let today = new Date();
-    let raffleEndDate = new Date("January 01, 2020 00:00:01");
+    let raffleStartDate = new Date("November 03, 2020 00:00:01");
+    let raffleEndDate = new Date("January 01, 2021 00:00:01");
 
-    if (today <= raffleEndDate) {
+    if (today <= raffleEndDate && today >= raffleStartDate) {
       // check for valid data
       if (false !== raffleData && raffleData.hasOwnProperty("TransDetails")) {
         // get variables
@@ -358,7 +356,6 @@ app.setHandler({
             .addT("RAFFLE_UPDATE", {
               raffleUpdatedAt: raffleUpdatedAt.toDateString(),
             })
-            .addT(holidayStinger());
         }
         if (raffleTickets) {
           if (raffleTickets > 0) {
@@ -366,21 +363,21 @@ app.setHandler({
               .addT("RAFFLE_TICKETS", {
                 raffleTickets: raffleTickets,
               })
-              .addT(holidayStinger());
           } else {
-            speech = speech.addT("RAFFLE_OUT").addT(holidayStinger());
+            speech = speech.addT("RAFFLE_OUT");
           }
         } else {
           // error handling
-          speech = speech.addT("RAFFLE_TROUBLE").addT(holidayStinger());
+          speech = speech.addT("RAFFLE_TROUBLE");
         }
       } else {
         // error handling
-        speech = speech.addT("RAFFLE_TROUBLE").addT(holidayStinger());
+        speech = speech.addT("RAFFLE_TROUBLE");
       }
     } else {
-      speech = speech.addT("RAFFLE_END").addT(holidayStinger());
+      speech = speech.addT("RAFFLE_END");
     }
+    speech = speech.addT(holidayStinger());
     this.tell(speech);
   },
   NoCanDoIntent() {
@@ -516,7 +513,6 @@ let executeWinningNumbersSingleAPICall = async (responseKey) => {
 function holidayStinger() {
   let num = (Math.floor(Math.random() * 4) + 1).toString();
   let stinger = " ";
-  let today = new Date();
   let activateDate = new Date("November 03, 2020 00:00:01");
   let endDate = new Date("December 31, 2020 00:00:01");
   if (today >= activateDate && today <= endDate) {
