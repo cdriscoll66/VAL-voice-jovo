@@ -75,10 +75,6 @@ app.setHandler({
           responseKey = "megaMillions";
           speechResponse = "JACKPOT_MEGAMILLIONS";
           break;
-        case "cash5":
-          responseKey = "cash5";
-          speechResponse = "JACKPOT_CASH5";
-          break;
       }
 
       // make the API call
@@ -91,6 +87,7 @@ app.setHandler({
         this.tell(speech);
       } else {
         // error handling
+
         let speech = this.speechBuilder()
           .addT("JACKPOT_TROUBLE")
           .addT(holidayStinger());
@@ -122,7 +119,8 @@ app.setHandler({
       // Give a warning message for any other value of lotteryGame slot
       let speech = this.speechBuilder()
         .addT("JACKPOT_INVALID", {
-          lotteryGame: this.$inputs.lotteryGame.id,
+          // lotteryGame: this.$inputs.lotteryGame.id,
+          lotteryGame: "That",
         })
         .addT("JACKPOT_GAMES")
         .addT(holidayStinger());
@@ -135,7 +133,6 @@ app.setHandler({
     if (!this.$alexaSkill.$dialog.isCompleted()) {
       this.$alexaSkill.$dialog.delegate();
     }
-
     // handle various draw times
     if (this.$inputs.lotteryGame.id == "powerball") {
       this.tell(
@@ -184,7 +181,8 @@ app.setHandler({
       // Give a warning message for any other value of lotteryGame slot
       let speech = this.speechBuilder()
         .addT("DRAWING_INVALID", {
-          lotteryGame: lotteryGame.value,
+          // lotteryGame: this.$inputs.lotteryGame.value,
+          lotteryGame: "That",
         })
         .addT("DRAWING_GAMES")
         .addT(holidayStinger());
@@ -257,44 +255,104 @@ app.setHandler({
           .addT(holidayStinger());
         this.tell(speech);
       }
-    } else if (this.$inputs.lotteryGame.id == "cash5") {
+    } else if (
+      this.$inputs.lotteryGame.id == "cash5" ||
+      this.$inputs.lotteryGame.id == "pick4" ||
+      this.$inputs.lotteryGame.id == "pick3"
+    ) {
+      console.log("check1");
+      let gameName = this.$inputs.lotteryGame.id;
+      let responseKey,
+        speechResponse = "";
+      switch (this.$inputs.lotteryGame.id) {
+        case "cash5":
+          responseKey = "cash5";
+          let today = new Date();
+          let activateDate = new Date("October 26, 2020 23:00:01");
+          if (today <= activateDate) {
+            speechResponse = "NUMBERS_CASH5";
+          } else {
+            speechResponse = "NUMBERS_CASH5_NEW";
+          }
+          break;
+        case "pick4":
+          responseKey = "pick4";
+          speechResponse = "NUMBERS_PICK4";
+          break;
+        case "pick3":
+          responseKey = "pick3";
+          speechResponse = "NUMBERS_PICK3";
+          break;
+      }
+
+      // get the jackpot data
+      let data = await lotteryData.getWinningNumbersData(responseKey);
+      // set up speech
+      let speech = "";
+      console.log("conor", data, "conorend");
+      // if there is data
+      if (false !== data) {
+        // write speech
+        speech = this.speechBuilder();
+        for (let k in data) {
+          if (false !== data[k]["numbers"]) {
+            speech = speech.addT(speechResponse, {
+              numbers: data[k]["numbers"],
+              date: data[k]["drawdate"],
+              time: data[k]["drawtime"],
+            });
+          } else {
+            speech = speech.addT("NUMBERS_FUTURE", {
+              lotteryGame: gameName,
+              date: data[k]["drawdate"],
+              time: data[k]["drawtime"],
+            });
+          }
+        }
+      } else {
+        // error handling
+        speech = this.speechBuilder().addT("NUMBERS_TROUBLE");
+      }
+      speech = speech.addT(holidayStinger());
+
+      this.tell(speech);
+
       // handle the cash 5 slot
 
-      // Temporary check to go live at correct date - remove after date.
-      let today = new Date();
-      let activateDate = new Date("October 26, 2020 23:00:01");
-      if (today >= activateDate) {
-        executeWinningNumbersMultiple(
-          this,
-          "cash5",
-          "Cash Five",
-          "NUMBERS_CASH5"
-        );
-      } else {
-        console.log("conor true");
-        executeWinningNumbersMultiple(
-          this,
-          "cash5",
-          "Cash Five",
-          "NUMBERS_CASH5_NEW"
-        );
-      }
-    } else if (this.$inputs.lotteryGame.id == "pick4") {
-      // handle the cash 5 slot
-      executeWinningNumbersMultiple(
-        this,
-        "pick4",
-        "Pick Four",
-        "NUMBERS_PICK4"
-      );
-    } else if (this.$inputs.lotteryGame.id == "pick3") {
-      // handle the cash 5 slot
-      executeWinningNumbersMultiple(
-        this,
-        "pick3",
-        "Pick Three",
-        "NUMBERS_PICK3"
-      );
+      //   // Temporary check to go live at correct date - remove after date.
+      //   let today = new Date();
+      //   let activateDate = new Date("October 26, 2020 23:00:01");
+      //   if (today <= activateDate) {
+      //     executeWinningNumbersMultiple(
+      //       this,
+      //       "cash5",
+      //       "Cash Five",
+      //       "NUMBERS_CASH5"
+      //     );
+      //   } else {
+      //     executeWinningNumbersMultiple(
+      //       this,
+      //       "cash5",
+      //       "Cash Five",
+      //       "NUMBERS_CASH5_NEW"
+      //     );
+      //   }
+      // } else if (this.$inputs.lotteryGame.id == "pick4") {
+      //   // handle the cash 5 slot
+      //   executeWinningNumbersMultiple(
+      //     this,
+      //     "pick4",
+      //     "Pick Four",
+      //     "NUMBERS_PICK4"
+      //   );
+      // } else if (this.$inputs.lotteryGame.id == "pick3") {
+      //   // handle the cash 5 slot
+      //   executeWinningNumbersMultiple(
+      //     this,
+      //     "pick3",
+      //     "Pick Three",
+      //     "NUMBERS_PICK3"
+      //   );
     } else if (this.$inputs.lotteryGame.id == "rolling") {
       // handle the rolling slot
       this.tell(this.t("NUMBERS_ROLLINGJACKPOT"));
@@ -311,7 +369,8 @@ app.setHandler({
     }
   },
   ListGamesIntent() {
-    this.tell(this.t("LIST_GAMES").addT(holidayStinger()));
+    let speech = this.speechBuilder().addT("LIST_GAMES").addT(holidayStinger());
+    this.tell(speech);
   },
   async RaffleIntent() {
     let raffleData = await lotteryData.getRaffleData();
@@ -367,25 +426,24 @@ app.setHandler({
     if (!this.$alexaSkill.$dialog.isCompleted()) {
       this.$alexaSkill.$dialog.delegate();
     }
-
     // handle various draw times
-    if (helpOptions.id == "listgames") {
-      this.tell(this.t("HELP_LIST").addT(holidayStinger()));
-    } else if (helpOptions.id == "times") {
-      this.tell(this.t("HELP_TIMES"));
-    } else if (helpOptions.id == "numbers") {
-      this.tell(this.t("HELP_NUMBERS"));
-    } else if (helpOptions.id == "jackpot") {
-      this.tell(this.t("HELP_JACKPOT"));
-    } else {
-      this.tell(
-        this.t("LIST_INTENTS") +
-          " " +
-          this.t("HELP_MESSAGE") +
-          " " +
-          this.t("EXAMPLE_INVOCATION")
-      );
-    }
+    // if (this.$inputs.helpOptions.id == "listgames") {
+    //   this.tell(this.t("HELP_LIST").addT(holidayStinger()));
+    // } else if (this.$inputs.helpOptions.id == "times") {
+    //   this.tell(this.t("HELP_TIMES"));
+    // } else if (this.$inputs.helpOptions.id == "numbers") {
+    //   this.tell(this.t("HELP_NUMBERS"));
+    // } else if (this.$inputs.helpOptions.id == "jackpot") {
+    //   this.tell(this.t("HELP_JACKPOT"));
+    // } else {
+    this.tell(
+      this.t("LIST_INTENTS") +
+        " " +
+        this.t("HELP_MESSAGE") +
+        " " +
+        this.t("EXAMPLE_INVOCATION")
+    );
+    // }
   },
   CancelIntent() {
     this.tell(this.t("CANCEL_MESSAGE"));
@@ -504,53 +562,50 @@ let executeWinningNumbersSingleAPICall = async (responseKey) => {
  * @param {*} gameName the speech ready game name
  * @param {*} speechResponse the speech response to build
  */
-let executeWinningNumbersMultiple = (
-  jovo,
-  responseKey,
-  gameName,
-  speechResponse
-) => {
-  // wait for data to come back from API
-  (async function (jovo) {
-    // get the jackpot data
-    let data = await lotteryData.getWinningNumbersData(responseKey);
-    // set up speech
-    let speech = "";
+// let executeWinningNumbersMultiple = (
+//   jovo,
+//   responseKey,
+//   gameName,
+//   speechResponse
+// ) => {
+//   // wait for data to come back from API
+//   (async function (jovo) {
+//     // get the jackpot data
+//     let data = await lotteryData.getWinningNumbersData(responseKey);
+//     // set up speech
+//     let speech = "";
+//     console.log('conor', data, 'conorend');
+//     // if there is data
+//     if (false !== data) {
+//       // write speech
+//       speech = jovo.speechBuilder();
+//       for (let k in data) {
+//         if (false !== data[k]["numbers"]) {
+//           speech = speech
+//             .addT(speechResponse, {
+//               numbers: data[k]["numbers"],
+//               date: data[k]["drawdate"],
+//               time: data[k]["drawtime"],
+//             })
+//             .addT(holidayStinger());
+//         } else {
+//           speech = speech
+//             .addT("NUMBERS_FUTURE", {
+//               lotteryGame: gameName,
+//               date: data[k]["drawdate"],
+//               time: data[k]["drawtime"],
+//             })
+//             .addT(holidayStinger());
+//         }
+//       }
+//     } else {
+//       // error handling
+//       speech = jovo.speechBuilder().addT("NUMBERS_TROUBLE");
+//     }
 
-    // if there is data
-    if (false !== data) {
-      // write speech
-      speech = jovo.speechBuilder();
-      for (let k in data) {
-        if (false !== data[k]["numbers"]) {
-          speech = speech
-            .addT(speechResponse, {
-              numbers: data[k]["numbers"],
-              date: data[k]["drawdate"],
-              time: data[k]["drawtime"],
-            })
-            .addT(holidayStinger());
-        } else {
-          speech = speech
-            .addT("NUMBERS_FUTURE", {
-              lotteryGame: gameName,
-              date: data[k]["drawdate"],
-              time: data[k]["drawtime"],
-            })
-            .addT(holidayStinger());
-        }
-      }
-    } else {
-      // error handling
-      speech = jovo.speechBuilder().addT("NUMBERS_TROUBLE");
-    }
-
-    return jovo.tell(speech);
-  })(jovo);
-};
-
-
-
+//     return jovo.tell(speech);
+//   })(jovo);
+// };
 
 /**
  * Randomly add a tag at the end of speech
@@ -562,6 +617,7 @@ function holidayStinger() {
   let stinger = " ";
   let today = new Date();
   let activateDate = new Date("November 03, 2020 00:00:01");
+  let endDate = new Date("December 31, 2020 00:00:01");
   if (today >= activateDate) {
     stinger = "HOLIDAY_" + num;
     return stinger;
