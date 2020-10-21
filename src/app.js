@@ -47,7 +47,6 @@ const lotteryData = require("./data.js");
 // App Logic
 // =================================================================================
 
-
 app.setHandler({
   LAUNCH() {
     let speech = this.t("LAUNCH_SPEECH");
@@ -55,7 +54,7 @@ app.setHandler({
 
     this.ask(speech, reprompt);
   },
-  async JackpotIntent(lotteryGame) {
+  async JackpotIntent() {
     // Let Alexa handle the dialogue via a delegate
     if (!this.$alexaSkill.$dialog.isCompleted()) {
       this.$alexaSkill.$dialog.delegate();
@@ -89,8 +88,6 @@ app.setHandler({
         let speech = this.speechBuilder()
           .addT(speechResponse, data)
           .addT(holidayStinger());
-        console.log("conor", speech, "conoroverJackpot");
-
         this.tell(speech);
       } else {
         // error handling
@@ -133,7 +130,7 @@ app.setHandler({
       this.tell(speech);
     }
   },
-  NextDrawingIntent(lotteryGame) {
+  NextDrawingIntent() {
     // Handle the dialogue
     if (!this.$alexaSkill.$dialog.isCompleted()) {
       this.$alexaSkill.$dialog.delegate();
@@ -195,21 +192,22 @@ app.setHandler({
       this.tell(speech);
     }
   },
-  async WinningNumbersIntent(lotteryGame, drawingDate, relativeDate) {
+  async WinningNumbersIntent() {
     if (!this.$alexaSkill.$dialog.isCompleted()) {
       this.$alexaSkill.$dialog.delegate();
     }
+
     // handle various winning numbers
+
     if (this.$inputs.lotteryGame.id == "powerball") {
       // handle the powerball slot
-      // let data = await executeWinningNumbersSingleAPICall("powerBall");
-      let data = false;
+      let data = await executeWinningNumbersSingleAPICall("powerBall");
+
       if (false !== data) {
         let speech = this.speechBuilder()
           .addT("NUMBERS_POWERBALL", data)
-          
+
           .addT(holidayStinger());
-        console.log("conor", speech, "conoroverNumbers");
         this.tell(speech);
       } else {
         let speech = this.speechBuilder()
@@ -265,7 +263,7 @@ app.setHandler({
       // Temporary check to go live at correct date - remove after date.
       let today = new Date();
       let activateDate = new Date("October 26, 2020 23:00:01");
-      if (today <= activateDate) {
+      if (today >= activateDate) {
         executeWinningNumbersMultiple(
           this,
           "cash5",
@@ -273,10 +271,13 @@ app.setHandler({
           "NUMBERS_CASH5"
         );
       } else {
-        let speech = this.speechBuilder()
-          .addT("NUMBERS_CASH5_NEW")
-          .addT(holidayStinger());
-        this.tell(speech);
+        console.log("conor true");
+        executeWinningNumbersMultiple(
+          this,
+          "cash5",
+          "Cash Five",
+          "NUMBERS_CASH5_NEW"
+        );
       }
     } else if (this.$inputs.lotteryGame.id == "pick4") {
       // handle the cash 5 slot
@@ -312,14 +313,57 @@ app.setHandler({
   ListGamesIntent() {
     this.tell(this.t("LIST_GAMES").addT(holidayStinger()));
   },
-  RaffleIntent() {
-    // handle the raffle
-    executeRaffleClosure(this);
+  async RaffleIntent() {
+    let raffleData = await lotteryData.getRaffleData();
+    // init speech
+    let speech = this.speechBuilder();
+
+    let today = new Date();
+    let raffleEndDate = new Date("January 01, 2020 00:00:01");
+
+    if (today <= raffleEndDate) {
+      // check for valid data
+      if (false !== raffleData && raffleData.hasOwnProperty("TransDetails")) {
+        // get variables
+        let raffleTickets = raffleData.TransDetails["details1"].tickets;
+        let raffleUpdatedAt = new Date(
+          raffleData.TransDetails["details2"].updated
+        );
+
+        if (raffleUpdatedAt) {
+          speech = speech
+            .addT("RAFFLE_UPDATE", {
+              raffleUpdatedAt: raffleUpdatedAt.toDateString(),
+            })
+            .addT(holidayStinger());
+        }
+        if (raffleTickets) {
+          if (raffleTickets > 0) {
+            speech = speech
+              .addT("RAFFLE_TICKETS", {
+                raffleTickets: raffleTickets,
+              })
+              .addT(holidayStinger());
+          } else {
+            speech = speech.addT("RAFFLE_OUT").addT(holidayStinger());
+          }
+        } else {
+          // error handling
+          speech = speech.addT("RAFFLE_TROUBLE").addT(holidayStinger());
+        }
+      } else {
+        // error handling
+        speech = speech.addT("RAFFLE_TROUBLE").addT(holidayStinger());
+      }
+    } else {
+      speech = speech.addT("RAFFLE_END").addT(holidayStinger());
+    }
+    this.tell(speech);
   },
   NoCanDoIntent() {
     this.tell(this.t("NOT_YET") + " " + this.t("OUTBOUND_MESSAGE"));
   },
-  HelpIntent(helpOptions) {
+  HelpIntent() {
     if (!this.$alexaSkill.$dialog.isCompleted()) {
       this.$alexaSkill.$dialog.delegate();
     }
@@ -505,65 +549,8 @@ let executeWinningNumbersMultiple = (
   })(jovo);
 };
 
-/**
- * API call for getting current raffle data
- *
- * @param {*} jovo jovo app object
- * @param {*} responseKey reference key returned in the lottery API response
- * @param {*} speechResponse the speech response to build
- */
-let executeRaffleClosure = (jovo) => {
-  // wait for data to come back from API
-  return (async function (jovo) {
-    // get the jackpot data
-    let raffleData = await lotteryData.getRaffleData();
-    // init speech
-    let speech = jovo.speechBuilder();
 
-    let today = new Date();
-    let raffleEndDate = new Date("January 01, 2020 00:00:01");
 
-    if (today <= raffleEndDate) {
-      // check for valid data
-      if (false !== raffleData && raffleData.hasOwnProperty("TransDetails")) {
-        // get variables
-        let raffleTickets = raffleData.TransDetails["details1"].tickets;
-        let raffleUpdatedAt = new Date(
-          raffleData.TransDetails["details2"].updated
-        );
-
-        if (raffleUpdatedAt) {
-          speech = speech
-            .addT("RAFFLE_UPDATE", {
-              raffleUpdatedAt: raffleUpdatedAt.toDateString(),
-            })
-            .addT(holidayStinger());
-        }
-        if (raffleTickets) {
-          if (raffleTickets > 0) {
-            speech = speech
-              .addT("RAFFLE_TICKETS", {
-                raffleTickets: raffleTickets,
-              })
-              .addT(holidayStinger());
-          } else {
-            speech = speech.addT("RAFFLE_OUT").addT(holidayStinger());
-          }
-        } else {
-          // error handling
-          speech = speech.addT("RAFFLE_TROUBLE").addT(holidayStinger());
-        }
-      } else {
-        // error handling
-        speech = speech.addT("RAFFLE_TROUBLE").addT(holidayStinger());
-      }
-    } else {
-      speech = speech.addT("RAFFLE_END").addT(holidayStinger());
-    }
-    console.log("Conny", speech, "conny2");
-    return jovo.tell(speech);
-  })(jovo);
-};
 
 /**
  * Randomly add a tag at the end of speech
@@ -576,9 +563,9 @@ function holidayStinger() {
   let today = new Date();
   let activateDate = new Date("November 03, 2020 00:00:01");
   if (today >= activateDate) {
-stinger = "HOLIDAY_" + num;
-  return stinger;
+    stinger = "HOLIDAY_" + num;
+    return stinger;
+  }
 }
-};
 
 module.exports = { app };
