@@ -64,7 +64,8 @@ app.setHandler({
 
     if (
       this.$inputs.lotteryGame.id == "powerball" ||
-      this.$inputs.lotteryGame.id == "megamillion"
+      this.$inputs.lotteryGame.id == "megamillion" ||
+      this.$inputs.lotteryGame.id == "cash5"
     ) {
       let responseKey,
         speechResponse = "";
@@ -76,6 +77,10 @@ app.setHandler({
         case "megamillion":
           responseKey = "megaMillions";
           speechResponse = "JACKPOT_MEGAMILLIONS";
+          break;
+        case "cash5":
+          responseKey = "cash5";
+          speechResponse = "JACKPOT_CASH5";
           break;
       }
 
@@ -266,7 +271,7 @@ app.setHandler({
       switch (this.$inputs.lotteryGame.id) {
         case "cash5":
           responseKey = "cash5";
-                // Temporary check to go live at correct date - remove after date.
+          // Temporary check to go live at correct date - remove after date.
           let activateDate = new Date("October 26, 2020 23:00:01");
           if (today <= activateDate) {
             speechResponse = "NUMBERS_CASH5";
@@ -314,7 +319,6 @@ app.setHandler({
       speech = speech.addT(holidayStinger());
 
       this.tell(speech);
-
     } else if (this.$inputs.lotteryGame.id == "rolling") {
       // handle the rolling slot
       this.tell(this.t("NUMBERS_ROLLINGJACKPOT"));
@@ -352,17 +356,15 @@ app.setHandler({
         );
 
         if (raffleUpdatedAt) {
-          speech = speech
-            .addT("RAFFLE_UPDATE", {
-              raffleUpdatedAt: raffleUpdatedAt.toDateString(),
-            })
+          speech = speech.addT("RAFFLE_UPDATE", {
+            raffleUpdatedAt: raffleUpdatedAt.toDateString(),
+          });
         }
         if (raffleTickets) {
           if (raffleTickets > 0) {
-            speech = speech
-              .addT("RAFFLE_TICKETS", {
-                raffleTickets: raffleTickets,
-              })
+            speech = speech.addT("RAFFLE_TICKETS", {
+              raffleTickets: raffleTickets,
+            });
           } else {
             speech = speech.addT("RAFFLE_OUT");
           }
@@ -466,7 +468,6 @@ function formatVal(val) {
 let executeJackpotAPICall = async (responseKey) => {
   // get the jackpot data
   let jackpotData = await lotteryData.getJackpotData();
-
   // check for valid data
   if (
     false !== jackpotData &&
@@ -477,6 +478,13 @@ let executeJackpotAPICall = async (responseKey) => {
       jackpotValue: jackpotData.results[responseKey].jackpotvalue,
       cashValue: jackpotData.results[responseKey].cashvalue,
       multiplierValue: jackpotData.results[responseKey].mult,
+    };
+  } else if (
+    false !== jackpotData &&
+    undefined !== jackpotData.results[responseKey].jackpotvalue
+  ) {
+    return {
+      jackpotValue: jackpotData.results[responseKey].jackpotvalue,
     };
   } else {
     return false;
@@ -503,7 +511,6 @@ let executeWinningNumbersSingleAPICall = async (responseKey) => {
     return false;
   }
 };
-
 
 /**
  * Randomly add a tag at the end of speech

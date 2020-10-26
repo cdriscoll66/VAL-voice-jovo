@@ -5,7 +5,7 @@
     "LAUNCH_REPROMPT": "For example, you can say, \"Alexa, ask Virginia Lottery for the Mega Millions jack-pot\"",
     "JACKPOT_POWERBALL": "The current jackpot for Powerball is {{jackpotValue}} with a cash value of {{cashValue}}. ",
     "JACKPOT_MEGAMILLIONS": "The current jackpot for Mega Millions is {{jackpotValue}} with a cash value of {{cashValue}}.",
-    "JACKPOT_CASH5": "The current jackpot for Cash 5 with Easy Match is {{jackpotValue}} with a cash value of {{cashValue}}. ,",
+    "JACKPOT_CASH5": "The current jackpot for Cash 5 with Easy Match is {{jackpotValue}}. ,",
     "JACKPOT_INVALID": "Hmm. I don't have jackpot information for {{lotteryGame}}.",
     "JACKPOT_GAMES": "I can tell you the jackpot values for Mega millions, Powerball, Cash 5 with Easy Match,  and the Print and Play Rolling Jackpot.",
     "JACKPOT_TROUBLE": "I'm having trouble looking that up right now. Try again later.",
