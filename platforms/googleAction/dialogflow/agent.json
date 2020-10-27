@@ -2,7 +2,7 @@
 	"defaultTimezone": "America/New_York",
 	"description": "",
 	"webhook": {
-		"url": "https://webhook.jovo.cloud/223943fc-0af5-4e70-af0a-7958278aa09f",
+		"url": "arn:aws:lambda:us-east-1:818943587759:function:VALotterySkillDev",
 		"available": true
 	},
 	"language": "en"

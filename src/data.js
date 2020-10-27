@@ -16,8 +16,8 @@ let getJackpotData = async () => {
       method: "get",
       timeout: 8000,
       headers: {
-        "Content-Type": "application/json"
-      }
+        "Content-Type": "application/json",
+      },
     });
     if (res.status == 200) {
       // Don't forget to return something
@@ -28,7 +28,7 @@ let getJackpotData = async () => {
   }
 
   return false;
-}
+};
 
 /**
  * Async function that returns winning numbers by key
@@ -39,46 +39,47 @@ let getWinningNumbersData = async (gameKey) => {
   // fetch data from the API
   let data = await fetchWinningNumbersData();
   // if the data comes through for our key return it
-  if (false !== data && gameKey in data['results']) {
+  if (false !== data && gameKey in data["results"]) {
     let tmp = {};
 
-    if ('draw1' in data['results'][gameKey]) {
+    if ("draw1" in data["results"][gameKey]) {
       let k;
       // handle multiple drawings
-      for (k in data['results'][gameKey]) {
+      for (k in data["results"][gameKey]) {
         tmp[k] = {};
 
         // handle single multiple games
-        tmp[k]['numbers'] = filterKeys(data['results'][gameKey][k], /^N/);
-        if (tmp[k]['numbers'].length > 0) {
+        tmp[k]["numbers"] = filterKeys(data["results"][gameKey][k], /^N/);
+        if (tmp[k]["numbers"].length > 0) {
           // format the numbers
-          tmp[k]['numbers'] = tmp[k]['numbers'].join(', ')
-            .replace(/,(?=[^,]+$)/, ', and ');
+          tmp[k]["numbers"] = tmp[k]["numbers"]
+            .join(", ")
+            .replace(/,(?=[^,]+$)/, ", and ");
         } else {
           // return false if we don't have any numbers
-          tmp[k]['numbers'] = false;
+          tmp[k]["numbers"] = false;
         }
 
         // get draw date as a string
-        if ('drawdate' in data['results'][gameKey][k]) {
-          let drawDate = new Date(data['results'][gameKey][k]['drawdate']);
-          tmp[k]['drawdate'] = drawDate.toDateString();
+        if ("drawdate" in data["results"][gameKey][k]) {
+          let drawDate = new Date(data["results"][gameKey][k]["drawdate"]);
+          tmp[k]["drawdate"] = drawDate.toDateString();
         }
-        if ('drawtime' in data['results'][gameKey][k]) {
-          tmp[k]['drawtime'] = data['results'][gameKey][k]['drawtime'];
+        if ("drawtime" in data["results"][gameKey][k]) {
+          tmp[k]["drawtime"] = data["results"][gameKey][k]["drawtime"];
         }
       }
     } else {
       // handle single drawing games
 
       // get winning numbers as a string
-      tmp['numbers'] = filterKeys(data['results'][gameKey], /^N/);
-      tmp['bonusBall'] = tmp['numbers'].pop();
-      tmp['numbers'] = tmp['numbers'].join(', ');
+      tmp["numbers"] = filterKeys(data["results"][gameKey], /^N/);
+      tmp["bonusBall"] = tmp["numbers"].pop();
+      tmp["numbers"] = tmp["numbers"].join(", ");
       // get draw date as a string
-      if ('drawdate' in data['results'][gameKey]) {
-        let drawDate = new Date(data['results'][gameKey]['drawdate']);
-        tmp['drawdate'] = drawDate.toDateString();
+      if ("drawdate" in data["results"][gameKey]) {
+        let drawDate = new Date(data["results"][gameKey]["drawdate"]);
+        tmp["drawdate"] = drawDate.toDateString();
       }
     }
 
@@ -87,8 +88,7 @@ let getWinningNumbersData = async (gameKey) => {
   }
 
   return false;
-}
-
+};
 
 /**
  * Async function that returns raffle info
@@ -103,8 +103,8 @@ let getRaffleData = async () => {
       method: "get",
       timeout: 8000,
       headers: {
-        "Content-Type": "application/json"
-      }
+        "Content-Type": "application/json",
+      },
     });
     if (res.status == 200) {
       // Don't forget to return something
@@ -115,25 +115,23 @@ let getRaffleData = async () => {
   }
 
   return false;
-}
-
+};
 
 /**
  * Async function that returns Rolling Jackpot info
  */
 let getRollingJackpotData = async () => {
-
   // endpoint
   let lotteryXMLEndpoint = "https://valottery.com/rollingjackpot.xml";
-  console.log('pullingdata');
+  console.log("pullingdata");
   try {
     let res = await axios({
       url: lotteryXMLEndpoint,
       method: "get",
       timeout: 10000,
       headers: {
-        "Content-Type": "application/json"
-      }
+        "Content-Type": "application/json",
+      },
     });
     if (res.status == 200) {
       // Don't forget to return something
@@ -144,7 +142,7 @@ let getRollingJackpotData = async () => {
   }
 
   return false;
-}
+};
 
 /**
  * fetches winning data from external web service
@@ -159,8 +157,8 @@ let fetchWinningNumbersData = async () => {
       method: "get",
       timeout: 8000,
       headers: {
-        "Content-Type": "application/json"
-      }
+        "Content-Type": "application/json",
+      },
     });
     if (res.status == 200) {
       // Don't forget to return something
@@ -171,7 +169,7 @@ let fetchWinningNumbersData = async () => {
   }
 
   return false;
-}
+};
 
 /**
  * parses XML to JSON
@@ -181,7 +179,7 @@ let fetchWinningNumbersData = async () => {
 let parseXMLData = (xml) => {
   let json = parser.toJson(xml);
   return JSON.parse(json);
-}
+};
 
 /**
  * Filter out keys/values by pattern
@@ -190,7 +188,8 @@ let parseXMLData = (xml) => {
  * @param {*} filter
  */
 let filterKeys = (obj, filter) => {
-  let key, values = [];
+  let key,
+    values = [];
 
   for (key in obj) {
     if (obj.hasOwnProperty(key) && filter.test(key) && "" !== obj[key]) {
@@ -198,8 +197,8 @@ let filterKeys = (obj, filter) => {
     }
   }
 
-  return values
-}
+  return values;
+};
 
 module.exports.getJackpotData = getJackpotData;
 module.exports.getWinningNumbersData = getWinningNumbersData;

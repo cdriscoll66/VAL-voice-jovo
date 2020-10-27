@@ -9,23 +9,11 @@ const { Alexa } = require("jovo-platform-alexa");
 // const { GoogleAssistant } = require('jovo-platform-googleassistant');
 const { JovoDebugger } = require("jovo-plugin-debugger");
 // const { FileDb } = require('jovo-db-filedb');
-
+const config = require('./config.js');
 // ------------------------------------------------------------------
 // APP INITIALIZATION
 // ------------------------------------------------------------------
 
-const config = {
-  logging: true,
-  intentMap: {
-    "AMAZON.YesIntent": "YesIntent",
-    "AMAZON.NoIntent": "NoIntent",
-    "AMAZON.RepeatIntent": "RepeatIntent",
-    "AMAZON.StopIntent": "StopIntent",
-    "AMAZON.HelpIntent": "HelpIntent",
-    "AMAZON.CancelIntent": "CancelIntent",
-    "AMAZON.FallbackIntent": "Unhandled",
-  },
-};
 
 const app = new App(config);
 
@@ -111,7 +99,7 @@ app.setHandler({
           this.tell(speech);
         } else {
           let speech = this.speechBuilder()
-            .addT("JACKPOT_ROLLINGJACKPOT", data)
+            .addT('JACKPOT_ROLLINGJACKPOT', data)
             .addT(holidayStinger());
           this.tell(speech);
         }
@@ -125,11 +113,11 @@ app.setHandler({
     } else {
       // Give a warning message for any other value of lotteryGame slot
       let speech = this.speechBuilder()
-        .addT("JACKPOT_INVALID", {
+        .addT('JACKPOT_INVALID', {
           // lotteryGame: this.$inputs.lotteryGame.id,
-          lotteryGame: "That",
+          lotteryGame: 'That',
         })
-        .addT("JACKPOT_GAMES")
+        .addT('JACKPOT_GAMES')
         .addT(holidayStinger());
 
       this.tell(speech);
@@ -143,7 +131,7 @@ app.setHandler({
     // handle various draw times
     if (this.$inputs.lotteryGame.id == "powerball") {
       this.tell(
-        this.speechBuilder().addT("DRAWING_POWERBALL").addT(holidayStinger())
+        this.$speech.speechBuilder().addT("DRAWING_POWERBALL").addT(holidayStinger())
       );
     } else if (this.$inputs.lotteryGame.id == "megamillion") {
       this.tell(
@@ -158,17 +146,9 @@ app.setHandler({
         this.speechBuilder().addT("DRAWING_CASH4LIFE").addT(holidayStinger())
       );
     } else if (this.$inputs.lotteryGame.id == "cash5") {
-      // Temporary check to go live at correct date - remove after date.
-      let activateDate = new Date("October 26, 2020 00:00:01");
-      if (today <= activateDate) {
-        this.tell(
-          this.speechBuilder().addT("DRAWING_CASH5_OLD").addT(holidayStinger())
-        );
-      } else {
         this.tell(
           this.speechBuilder().addT("DRAWING_CASH5").addT(holidayStinger())
         );
-      }
     } else if (this.$inputs.lotteryGame.id == "pick4") {
       this.tell(
         this.speechBuilder().addT("DRAWING_PICK4").addT(holidayStinger())
@@ -271,13 +251,7 @@ app.setHandler({
       switch (this.$inputs.lotteryGame.id) {
         case "cash5":
           responseKey = "cash5";
-          // Temporary check to go live at correct date - remove after date.
-          let activateDate = new Date("October 26, 2020 23:00:01");
-          if (today <= activateDate) {
-            speechResponse = "NUMBERS_CASH5";
-          } else {
-            speechResponse = "NUMBERS_CASH5_NEW";
-          }
+          speechResponse = "NUMBERS_CASH5_NEW";
           break;
         case "pick4":
           responseKey = "pick4";
@@ -335,8 +309,8 @@ app.setHandler({
     }
   },
   ListGamesIntent() {
-    let speech = this.speechBuilder().addT("LIST_GAMES").addT(holidayStinger());
-    this.tell(speech);
+    this.$speech.addT('LIST_GAMES').addT(holidayStinger());
+    this.tell(this.$speech);
   },
   async RaffleIntent() {
     let raffleData = await lotteryData.getRaffleData();

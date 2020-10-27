@@ -4,7 +4,7 @@
 			"custom": {
 				"endpoint": {
 					"sslCertificateType": "Wildcard",
-					"uri": "https://webhook.jovo.cloud/223943fc-0af5-4e70-af0a-7958278aa09f"
+					"uri": "arn:aws:lambda:us-east-1:818943587759:function:VALotterySkillDev"
 				},
 				"interfaces": []
 			}
@@ -32,7 +32,7 @@
 				"en-US": {
 					"description": "The skill returns essential Virginia Lottery draw-game information including last and next drawing dates and times, winning numbers and jackpot amounts. Information on games including Pick 3, Pick 4, Cash 5, Mega Millions and Powerball can be accessed easily and efficiently.",
 					"examplePhrases": [
-						"Alexa, ask Virginia Lottery what are the winning numbers for pick 4",
+						"Alexa, ask Virginia Lottery what are the winning numbers for pick four",
 						"Alexa, ask Virginia Lottery what is the powerball jackpot",
 						"Alexa, ask Virginia Lottery when is the next mega millions drawing"
 					],
@@ -43,9 +43,9 @@
 						"chance",
 						"winning"
 					],
-					"largeIconUri": "https://s3.amazonaws.com/CAPS-SSE/echo_developer/5e92/eecd9a8c854a424b9d5c32a29a2569a3/APP_ICON_LARGE?versionId=qZSPBFi2ZCaPa_ISTsLKObTItxxe.Jwl&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Date=20201014T202310Z&X-Amz-SignedHeaders=host&X-Amz-Expires=86400&X-Amz-Credential=AKIAWBV6LQ4QHAYALYJ7%2F20201014%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Signature=4e3c895fc52a32743916ad6f23ec90d169e4e6e9924360191764a3b941de4ac4",
+					"largeIconUri": "https://s3.amazonaws.com/CAPS-SSE/echo_developer/5e92/eecd9a8c854a424b9d5c32a29a2569a3/APP_ICON_LARGE?versionId=qZSPBFi2ZCaPa_ISTsLKObTItxxe.Jwl&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Date=20201027T170025Z&X-Amz-SignedHeaders=host&X-Amz-Expires=86400&X-Amz-Credential=AKIAWBV6LQ4QHAYALYJ7%2F20201027%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Signature=342b71b4667ecdfd49fd0cd4a6c6c61aa00d113523bf6b021d4c813b8a6eb39a",
 					"name": "Virginia Lottery",
-					"smallIconUri": "https://s3.amazonaws.com/CAPS-SSE/echo_developer/a60a/2a9e391adf3b4f78bb029502c3b8789d/APP_ICON?versionId=sOAqj18PazXfPSqu84kMolyBjzWy_DNs&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Date=20201014T202310Z&X-Amz-SignedHeaders=host&X-Amz-Expires=86400&X-Amz-Credential=AKIAWBV6LQ4QHAYALYJ7%2F20201014%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Signature=df6c85ea49fc887ea170337a7545141b435055c63ef47aa0d81c5e3535acc298",
+					"smallIconUri": "https://s3.amazonaws.com/CAPS-SSE/echo_developer/a60a/2a9e391adf3b4f78bb029502c3b8789d/APP_ICON?versionId=sOAqj18PazXfPSqu84kMolyBjzWy_DNs&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Date=20201027T170025Z&X-Amz-SignedHeaders=host&X-Amz-Expires=86400&X-Amz-Credential=AKIAWBV6LQ4QHAYALYJ7%2F20201027%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Signature=00e3580aaabe444289e77a2d3f7d757dc58f183a0b2d14f86a9e0ea94921a0c8",
 					"summary": "Virginia Lottery draw-game information including drawing dates and times, winning numbers and jackpot amounts for games from Pick 3 to Mega Millions."
 				}
 			},
