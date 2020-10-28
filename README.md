@@ -55,3 +55,37 @@ Jovo is the most popular development framework for voice, including platforms li
 -   [Marketplace](https://www.jovo.tech/marketplace/)
 -   [Twitter](https://twitter.com/jovotech/)
 -   [Forum](https://community.jovo.tech/)
+
+
+
+AWS LAMBDA
+DEPLOYMENT STEPS. 
+
+How to push the Code up to the DEV LAMBDA. 
+
+To do this you will need an IAM un/pw permissions. 
+navigate to : console.aws.amazon.com
+
+account id is 'teamcolab' (and enter your aws IAM un/pw)
+
+From here navigate to Services > Lambda > functions > VALottery Dev skill. 
+
+On your local build - delete your node modules. 
+
+Run "npm run deploy:dev" 
+
+This will build the app for linux. 
+
+once it's complete you compress/zip up the entire file system (do not put it in a subdirectory)
+
+Navigate back to the console.aws.amazon.com and to the panel thats title Function Code. 
+
+Under the 'Actions' dropdown there will be an option to 'Upload a Zip File'
+
+Once successful. Check the app again:
+(use the test on the top, or navigate back to the skills kit and run a few tests off the lambda. Make sure you are still not pointing the endpoint at your Jovo Local App. )
+
+
+Once this skill has been approved from test. start the distribution and certification process. 
+
+if approved it will be pushed to live. 

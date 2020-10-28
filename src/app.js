@@ -115,11 +115,9 @@ app.setHandler({
       let speech = this.speechBuilder()
         .addT('JACKPOT_INVALID', {
           // lotteryGame: this.$inputs.lotteryGame.id,
-          lotteryGame: 'That',
+          lotteryGame: "that",
         })
-        .addT('JACKPOT_GAMES')
-        .addT(holidayStinger());
-
+        // .addT('JACKPOT_GAMES')
       this.tell(speech);
     }
   },
@@ -212,6 +210,20 @@ app.setHandler({
           .addT(holidayStinger());
         this.tell(speech);
       }
+    } else if (this.$inputs.lotteryGame.id == "cash5") {
+      // handle the cash5 slot
+      let data = await executeWinningNumbersSingleAPICall("cash5");
+      if (false !== data) {
+        let speech = this.speechBuilder()
+          .addT("NUMBERS_CASH5", data)
+          .addT(holidayStinger());
+        this.tell(speech);
+      } else {
+        let speech = this.speechBuilder()
+          .addT("NUMBERS_TROUBLE")
+          .addT(holidayStinger());
+        this.tell(speech);
+      }
     } else if (this.$inputs.lotteryGame.id == "bankamillion") {
       // handle the bank a million slot
       let data = await executeWinningNumbersSingleAPICall("bankAMillion");
@@ -241,7 +253,6 @@ app.setHandler({
         this.tell(speech);
       }
     } else if (
-      this.$inputs.lotteryGame.id == "cash5" ||
       this.$inputs.lotteryGame.id == "pick4" ||
       this.$inputs.lotteryGame.id == "pick3"
     ) {
@@ -249,10 +260,6 @@ app.setHandler({
       let responseKey,
         speechResponse = "";
       switch (this.$inputs.lotteryGame.id) {
-        case "cash5":
-          responseKey = "cash5";
-          speechResponse = "NUMBERS_CASH5_NEW";
-          break;
         case "pick4":
           responseKey = "pick4";
           speechResponse = "NUMBERS_PICK4";
@@ -473,6 +480,7 @@ let executeJackpotAPICall = async (responseKey) => {
 let executeWinningNumbersSingleAPICall = async (responseKey) => {
   // get the jackpot data
   let data = await lotteryData.getWinningNumbersData(responseKey);
+
   // if there is data
   if (false !== data) {
     return {
