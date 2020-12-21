@@ -78,14 +78,12 @@ app.setHandler({
         // write speech
         let speech = this.speechBuilder()
           .addT(speechResponse, data)
-          .addT(holidayStinger());
         this.tell(speech);
       } else {
         // error handling
 
         let speech = this.speechBuilder()
           .addT("JACKPOT_TROUBLE")
-          .addT(holidayStinger());
         this.tell(speech);
       }
     } else if (this.$inputs.lotteryGame.id == "rolling") {
@@ -95,19 +93,16 @@ app.setHandler({
         if (data.jackpotValue == "$") {
           let speech = this.speechBuilder()
             .addT("JACKPOT_ROLLING_INVALID", data)
-            .addT(holidayStinger());
           this.tell(speech);
         } else {
           let speech = this.speechBuilder()
             .addT('JACKPOT_ROLLINGJACKPOT', data)
-            .addT(holidayStinger());
           this.tell(speech);
         }
       } else {
         // error handling
         let speech = this.speechBuilder()
           .addT("JACKPOT_TROUBLE")
-          .addT(holidayStinger());
         this.tell(speech);
       }
     } else {
@@ -129,37 +124,36 @@ app.setHandler({
     // handle various draw times
     if (this.$inputs.lotteryGame.id == "powerball") {
       this.tell(
-        this.$speech.speechBuilder().addT("DRAWING_POWERBALL").addT(holidayStinger())
+        this.$speech.speechBuilder().addT("DRAWING_POWERBALL")
       );
     } else if (this.$inputs.lotteryGame.id == "megamillion") {
       this.tell(
-        this.speechBuilder().addT("DRAWING_MEGAMILLIONS").addT(holidayStinger())
+        this.speechBuilder().addT("DRAWING_MEGAMILLIONS")
       );
     } else if (this.$inputs.lotteryGame.id == "bankamillion") {
       this.tell(
-        this.speechBuilder().addT("DRAWING_BANKMILLION").addT(holidayStinger())
+        this.speechBuilder().addT("DRAWING_BANKMILLION")
       );
     } else if (this.$inputs.lotteryGame.id == "cash4") {
       this.tell(
-        this.speechBuilder().addT("DRAWING_CASH4LIFE").addT(holidayStinger())
+        this.speechBuilder().addT("DRAWING_CASH4LIFE")
       );
     } else if (this.$inputs.lotteryGame.id == "cash5") {
         this.tell(
-          this.speechBuilder().addT("DRAWING_CASH5").addT(holidayStinger())
+          this.speechBuilder().addT("DRAWING_CASH5")
         );
     } else if (this.$inputs.lotteryGame.id == "pick4") {
       this.tell(
-        this.speechBuilder().addT("DRAWING_PICK4").addT(holidayStinger())
+        this.speechBuilder().addT("DRAWING_PICK4")
       );
     } else if (this.$inputs.lotteryGame.id == "pick3") {
       this.tell(
-        this.speechBuilder().addT("DRAWING_PICK3").addT(holidayStinger())
+        this.speechBuilder().addT("DRAWING_PICK3")
       );
     } else if (this.$inputs.lotteryGame.id == "rolling") {
       this.tell(
         this.speechBuilder()
           .addT("DRAWING_ROLLINGJACKPOT")
-          .addT(holidayStinger())
       );
     } else {
       // Give a warning message for any other value of lotteryGame slot
@@ -169,7 +163,6 @@ app.setHandler({
           lotteryGame: "That",
         })
         .addT("DRAWING_GAMES")
-        .addT(holidayStinger());
 
       this.tell(speech);
     }
@@ -188,12 +181,10 @@ app.setHandler({
       if (false !== data) {
         let speech = this.speechBuilder()
           .addT("NUMBERS_POWERBALL", data)
-          .addT(holidayStinger());
         this.tell(speech);
       } else {
         let speech = this.speechBuilder()
           .addT("NUMBERS_TROUBLE")
-          .addT(holidayStinger());
         this.tell(speech);
       }
     } else if (this.$inputs.lotteryGame.id == "megamillion") {
@@ -202,12 +193,10 @@ app.setHandler({
       if (false !== data) {
         let speech = this.speechBuilder()
           .addT("NUMBERS_MEGAMILLIONS", data)
-          .addT(holidayStinger());
         this.tell(speech);
       } else {
         let speech = this.speechBuilder()
           .addT("NUMBERS_TROUBLE")
-          .addT(holidayStinger());
         this.tell(speech);
       }
     } else if (this.$inputs.lotteryGame.id == "cash5") {
@@ -216,12 +205,10 @@ app.setHandler({
       if (false !== data) {
         let speech = this.speechBuilder()
           .addT("NUMBERS_CASH5", data)
-          .addT(holidayStinger());
         this.tell(speech);
       } else {
         let speech = this.speechBuilder()
           .addT("NUMBERS_TROUBLE")
-          .addT(holidayStinger());
         this.tell(speech);
       }
     } else if (this.$inputs.lotteryGame.id == "bankamillion") {
@@ -230,12 +217,10 @@ app.setHandler({
       if (false !== data) {
         let speech = this.speechBuilder()
           .addT("NUMBERS_BANKMILLION", data)
-          .addT(holidayStinger());
         this.tell(speech);
       } else {
         let speech = this.speechBuilder()
           .addT("NUMBERS_TROUBLE")
-          .addT(holidayStinger());
         this.tell(speech);
       }
     } else if (this.$inputs.lotteryGame.id == "cash4") {
@@ -244,12 +229,10 @@ app.setHandler({
       if (false !== data) {
         let speech = this.speechBuilder()
           .addT("NUMBERS_CASH4LIFE", data)
-          .addT(holidayStinger());
         this.tell(speech);
       } else {
         let speech = this.speechBuilder()
           .addT("NUMBERS_TROUBLE")
-          .addT(holidayStinger());
         this.tell(speech);
       }
     } else if (
@@ -297,7 +280,6 @@ app.setHandler({
         // error handling
         speech = this.speechBuilder().addT("NUMBERS_TROUBLE");
       }
-      speech = speech.addT(holidayStinger());
 
       this.tell(speech);
     } else if (this.$inputs.lotteryGame.id == "rolling") {
@@ -310,13 +292,12 @@ app.setHandler({
           lotteryGame: lotteryGame.value,
         })
         .addT("NUMBERS_GAMES")
-        .addT(holidayStinger());
 
       this.tell(speech);
     }
   },
   ListGamesIntent() {
-    this.$speech.addT('LIST_GAMES').addT(holidayStinger());
+    this.$speech.addT('LIST_GAMES');
     this.tell(this.$speech);
   },
   async RaffleIntent() {
@@ -360,7 +341,6 @@ app.setHandler({
     } else {
       speech = speech.addT("RAFFLE_END");
     }
-    speech = speech.addT(holidayStinger());
     this.tell(speech);
   },
   NoCanDoIntent() {
@@ -493,21 +473,5 @@ let executeWinningNumbersSingleAPICall = async (responseKey) => {
     return false;
   }
 };
-
-/**
- * Randomly add a tag at the end of speech
- *
- */
-
-function holidayStinger() {
-  let num = (Math.floor(Math.random() * 4) + 1).toString();
-  let stinger = " ";
-  let activateDate = new Date("November 03, 2020 00:00:01");
-  let endDate = new Date("December 31, 2020 00:00:01");
-  if (today >= activateDate && today <= endDate) {
-    stinger = "HOLIDAY_" + num;
-    return stinger;
-  }
-}
 
 module.exports = { app };
