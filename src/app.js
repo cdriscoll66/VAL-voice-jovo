@@ -9,11 +9,10 @@ const { Alexa } = require("jovo-platform-alexa");
 // const { GoogleAssistant } = require('jovo-platform-googleassistant');
 const { JovoDebugger } = require("jovo-plugin-debugger");
 // const { FileDb } = require('jovo-db-filedb');
-const config = require('./config.js');
+const config = require("./config.js");
 // ------------------------------------------------------------------
 // APP INITIALIZATION
 // ------------------------------------------------------------------
-
 
 const app = new App(config);
 
@@ -76,14 +75,12 @@ app.setHandler({
       let data = await executeJackpotAPICall(responseKey);
       if (false !== data) {
         // write speech
-        let speech = this.speechBuilder()
-          .addT(speechResponse, data)
+        let speech = this.speechBuilder().addT(speechResponse, data).addAudio(tpStinger());
         this.tell(speech);
       } else {
         // error handling
 
-        let speech = this.speechBuilder()
-          .addT("JACKPOT_TROUBLE")
+        let speech = this.speechBuilder().addT("JACKPOT_TROUBLE");
         this.tell(speech);
       }
     } else if (this.$inputs.lotteryGame.id == "rolling") {
@@ -91,28 +88,30 @@ app.setHandler({
       let data = await executeRollingJackpotAPICall("pnpRollingJackpot");
       if (false !== data) {
         if (data.jackpotValue == "$") {
-          let speech = this.speechBuilder()
-            .addT("JACKPOT_ROLLING_INVALID", data)
+          let speech = this.speechBuilder().addT(
+            "JACKPOT_ROLLING_INVALID",
+            data
+          );
           this.tell(speech);
         } else {
-          let speech = this.speechBuilder()
-            .addT('JACKPOT_ROLLINGJACKPOT', data)
+          let speech = this.speechBuilder().addT(
+            "JACKPOT_ROLLINGJACKPOT",
+            data
+          ).addAudio(tpStinger());
           this.tell(speech);
         }
       } else {
         // error handling
-        let speech = this.speechBuilder()
-          .addT("JACKPOT_TROUBLE")
+        let speech = this.speechBuilder().addT("JACKPOT_TROUBLE");
         this.tell(speech);
       }
     } else {
       // Give a warning message for any other value of lotteryGame slot
-      let speech = this.speechBuilder()
-        .addT('JACKPOT_INVALID', {
-          // lotteryGame: this.$inputs.lotteryGame.id,
-          lotteryGame: "that",
-        })
-        // .addT('JACKPOT_GAMES')
+      let speech = this.speechBuilder().addT("JACKPOT_INVALID", {
+        // lotteryGame: this.$inputs.lotteryGame.id,
+        lotteryGame: "that",
+      });
+      // .addT('JACKPOT_GAMES')
       this.tell(speech);
     }
   },
@@ -123,38 +122,22 @@ app.setHandler({
     }
     // handle various draw times
     if (this.$inputs.lotteryGame.id == "powerball") {
-      this.tell(
-        this.$speech.speechBuilder().addT("DRAWING_POWERBALL")
-      );
+      console.log('Conor here!');
+      this.tell(this.speechBuilder().addT("DRAWING_POWERBALL"));
     } else if (this.$inputs.lotteryGame.id == "megamillion") {
-      this.tell(
-        this.speechBuilder().addT("DRAWING_MEGAMILLIONS")
-      );
+      this.tell(this.speechBuilder().addT("DRAWING_MEGAMILLIONS").addAudio(tpStinger()));
     } else if (this.$inputs.lotteryGame.id == "bankamillion") {
-      this.tell(
-        this.speechBuilder().addT("DRAWING_BANKMILLION")
-      );
+      this.tell(this.speechBuilder().addT("DRAWING_BANKMILLION").addAudio(tpStinger()));
     } else if (this.$inputs.lotteryGame.id == "cash4") {
-      this.tell(
-        this.speechBuilder().addT("DRAWING_CASH4LIFE")
-      );
+      this.tell(this.speechBuilder().addT("DRAWING_CASH4LIFE").addAudio(tpStinger()));
     } else if (this.$inputs.lotteryGame.id == "cash5") {
-        this.tell(
-          this.speechBuilder().addT("DRAWING_CASH5")
-        );
+      this.tell(this.speechBuilder().addT("DRAWING_CASH5").addAudio(tpStinger()));
     } else if (this.$inputs.lotteryGame.id == "pick4") {
-      this.tell(
-        this.speechBuilder().addT("DRAWING_PICK4")
-      );
+      this.tell(this.speechBuilder().addT("DRAWING_PICK4").addAudio(tpStinger()));
     } else if (this.$inputs.lotteryGame.id == "pick3") {
-      this.tell(
-        this.speechBuilder().addT("DRAWING_PICK3")
-      );
+      this.tell(this.speechBuilder().addT("DRAWING_PICK3").addAudio(tpStinger()));
     } else if (this.$inputs.lotteryGame.id == "rolling") {
-      this.tell(
-        this.speechBuilder()
-          .addT("DRAWING_ROLLINGJACKPOT")
-      );
+      this.tell(this.speechBuilder().addT("DRAWING_ROLLINGJACKPOT").addAudio(tpStinger()));
     } else {
       // Give a warning message for any other value of lotteryGame slot
       let speech = this.speechBuilder()
@@ -163,7 +146,7 @@ app.setHandler({
           lotteryGame: "That",
         })
         .addT("DRAWING_GAMES")
-
+        .addAudio(tpStinger());
       this.tell(speech);
     }
   },
@@ -179,60 +162,50 @@ app.setHandler({
       let data = await executeWinningNumbersSingleAPICall("powerBall");
 
       if (false !== data) {
-        let speech = this.speechBuilder()
-          .addT("NUMBERS_POWERBALL", data)
+        let speech = this.speechBuilder().addT("NUMBERS_POWERBALL", data).addAudio(tpStinger());
         this.tell(speech);
       } else {
-        let speech = this.speechBuilder()
-          .addT("NUMBERS_TROUBLE")
+        let speech = this.speechBuilder().addT("NUMBERS_TROUBLE");
         this.tell(speech);
       }
     } else if (this.$inputs.lotteryGame.id == "megamillion") {
       // handle the mega millions slot
       let data = await executeWinningNumbersSingleAPICall("megaMillions");
       if (false !== data) {
-        let speech = this.speechBuilder()
-          .addT("NUMBERS_MEGAMILLIONS", data)
+        let speech = this.speechBuilder().addT("NUMBERS_MEGAMILLIONS", data).addAudio(tpStinger());
         this.tell(speech);
       } else {
-        let speech = this.speechBuilder()
-          .addT("NUMBERS_TROUBLE")
+        let speech = this.speechBuilder().addT("NUMBERS_TROUBLE");
         this.tell(speech);
       }
     } else if (this.$inputs.lotteryGame.id == "cash5") {
       // handle the cash5 slot
       let data = await executeWinningNumbersSingleAPICall("cash5");
       if (false !== data) {
-        let speech = this.speechBuilder()
-          .addT("NUMBERS_CASH5", data)
+        let speech = this.speechBuilder().addT("NUMBERS_CASH5", data).addAudio(tpStinger());
         this.tell(speech);
       } else {
-        let speech = this.speechBuilder()
-          .addT("NUMBERS_TROUBLE")
+        let speech = this.speechBuilder().addT("NUMBERS_TROUBLE");
         this.tell(speech);
       }
     } else if (this.$inputs.lotteryGame.id == "bankamillion") {
       // handle the bank a million slot
       let data = await executeWinningNumbersSingleAPICall("bankAMillion");
       if (false !== data) {
-        let speech = this.speechBuilder()
-          .addT("NUMBERS_BANKMILLION", data)
+        let speech = this.speechBuilder().addT("NUMBERS_BANKMILLION", data).addAudio(tpStinger());
         this.tell(speech);
       } else {
-        let speech = this.speechBuilder()
-          .addT("NUMBERS_TROUBLE")
+        let speech = this.speechBuilder().addT("NUMBERS_TROUBLE");
         this.tell(speech);
       }
     } else if (this.$inputs.lotteryGame.id == "cash4") {
       // handle the cash 4 life slot
       let data = await executeWinningNumbersSingleAPICall("cash4Life");
       if (false !== data) {
-        let speech = this.speechBuilder()
-          .addT("NUMBERS_CASH4LIFE", data)
+        let speech = this.speechBuilder().addT("NUMBERS_CASH4LIFE", data).addAudio(tpStinger());
         this.tell(speech);
       } else {
-        let speech = this.speechBuilder()
-          .addT("NUMBERS_TROUBLE")
+        let speech = this.speechBuilder().addT("NUMBERS_TROUBLE");
         this.tell(speech);
       }
     } else if (
@@ -280,7 +253,7 @@ app.setHandler({
         // error handling
         speech = this.speechBuilder().addT("NUMBERS_TROUBLE");
       }
-
+      speech = speech.addAudio(tpStinger());
       this.tell(speech);
     } else if (this.$inputs.lotteryGame.id == "rolling") {
       // handle the rolling slot
@@ -292,12 +265,12 @@ app.setHandler({
           lotteryGame: lotteryGame.value,
         })
         .addT("NUMBERS_GAMES")
-
+        .addAudio(tpStinger());
       this.tell(speech);
     }
   },
   ListGamesIntent() {
-    this.$speech.addT('LIST_GAMES');
+    this.$speech.addT("LIST_GAMES").addAudio(tpStinger());
     this.tell(this.$speech);
   },
   async RaffleIntent() {
@@ -341,6 +314,7 @@ app.setHandler({
     } else {
       speech = speech.addT("RAFFLE_END");
     }
+    speech = speech.addAudio(tpStinger());
     this.tell(speech);
   },
   NoCanDoIntent() {
@@ -473,5 +447,21 @@ let executeWinningNumbersSingleAPICall = async (responseKey) => {
     return false;
   }
 };
+
+
+/**
+ * Randomly add a tag at the end of speech
+ *
+ */
+function tpStinger() {
+  let num = (Math.floor(Math.random() * 5) + 1).toString();
+  let stinger = " ";
+  let activateDate = new Date("January 1, 2020 00:00:01");
+  let endDate = new Date("Mar 1, 2021 00:00:01");
+  if (today >= activateDate && today <= endDate) {
+    stinger = "https://virginia-lottery.s3.amazonaws.com/alexa/audio/val-ty-"+ num + ".mp3" ;
+  }
+return stinger;
+}
 
 module.exports = { app };
