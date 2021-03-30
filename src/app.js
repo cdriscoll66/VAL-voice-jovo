@@ -75,7 +75,7 @@ app.setHandler({
       let data = await executeJackpotAPICall(responseKey);
       if (false !== data) {
         // write speech
-        let speech = this.speechBuilder().addT(speechResponse, data).addAudio(tpStinger());
+        let speech = this.speechBuilder().addT(speechResponse, data);
         this.tell(speech);
       } else {
         // error handling
@@ -96,8 +96,7 @@ app.setHandler({
         } else {
           let speech = this.speechBuilder().addT(
             "JACKPOT_ROLLINGJACKPOT",
-            data
-          ).addAudio(tpStinger());
+            data);
           this.tell(speech);
         }
       } else {
@@ -125,19 +124,19 @@ app.setHandler({
       console.log('Conor here!');
       this.tell(this.speechBuilder().addT("DRAWING_POWERBALL"));
     } else if (this.$inputs.lotteryGame.id == "megamillion") {
-      this.tell(this.speechBuilder().addT("DRAWING_MEGAMILLIONS").addAudio(tpStinger()));
+      this.tell(this.speechBuilder().addT("DRAWING_MEGAMILLIONS"));
     } else if (this.$inputs.lotteryGame.id == "bankamillion") {
-      this.tell(this.speechBuilder().addT("DRAWING_BANKMILLION").addAudio(tpStinger()));
+      this.tell(this.speechBuilder().addT("DRAWING_BANKMILLION"));
     } else if (this.$inputs.lotteryGame.id == "cash4") {
-      this.tell(this.speechBuilder().addT("DRAWING_CASH4LIFE").addAudio(tpStinger()));
+      this.tell(this.speechBuilder().addT("DRAWING_CASH4LIFE"));
     } else if (this.$inputs.lotteryGame.id == "cash5") {
-      this.tell(this.speechBuilder().addT("DRAWING_CASH5").addAudio(tpStinger()));
+      this.tell(this.speechBuilder().addT("DRAWING_CASH5"));
     } else if (this.$inputs.lotteryGame.id == "pick4") {
-      this.tell(this.speechBuilder().addT("DRAWING_PICK4").addAudio(tpStinger()));
+      this.tell(this.speechBuilder().addT("DRAWING_PICK4"));
     } else if (this.$inputs.lotteryGame.id == "pick3") {
-      this.tell(this.speechBuilder().addT("DRAWING_PICK3").addAudio(tpStinger()));
+      this.tell(this.speechBuilder().addT("DRAWING_PICK3"));
     } else if (this.$inputs.lotteryGame.id == "rolling") {
-      this.tell(this.speechBuilder().addT("DRAWING_ROLLINGJACKPOT").addAudio(tpStinger()));
+      this.tell(this.speechBuilder().addT("DRAWING_ROLLINGJACKPOT"));
     } else {
       // Give a warning message for any other value of lotteryGame slot
       let speech = this.speechBuilder()
@@ -145,8 +144,7 @@ app.setHandler({
           // lotteryGame: this.$inputs.lotteryGame.value,
           lotteryGame: "That",
         })
-        .addT("DRAWING_GAMES")
-        .addAudio(tpStinger());
+        .addT("DRAWING_GAMES");
       this.tell(speech);
     }
   },
@@ -162,7 +160,7 @@ app.setHandler({
       let data = await executeWinningNumbersSingleAPICall("powerBall");
 
       if (false !== data) {
-        let speech = this.speechBuilder().addT("NUMBERS_POWERBALL", data).addAudio(tpStinger());
+        let speech = this.speechBuilder().addT("NUMBERS_POWERBALL", data);
         this.tell(speech);
       } else {
         let speech = this.speechBuilder().addT("NUMBERS_TROUBLE");
@@ -172,7 +170,7 @@ app.setHandler({
       // handle the mega millions slot
       let data = await executeWinningNumbersSingleAPICall("megaMillions");
       if (false !== data) {
-        let speech = this.speechBuilder().addT("NUMBERS_MEGAMILLIONS", data).addAudio(tpStinger());
+        let speech = this.speechBuilder().addT("NUMBERS_MEGAMILLIONS", data);
         this.tell(speech);
       } else {
         let speech = this.speechBuilder().addT("NUMBERS_TROUBLE");
@@ -182,7 +180,7 @@ app.setHandler({
       // handle the cash5 slot
       let data = await executeWinningNumbersSingleAPICall("cash5");
       if (false !== data) {
-        let speech = this.speechBuilder().addT("NUMBERS_CASH5", data).addAudio(tpStinger());
+        let speech = this.speechBuilder().addT("NUMBERS_CASH5", data);
         this.tell(speech);
       } else {
         let speech = this.speechBuilder().addT("NUMBERS_TROUBLE");
@@ -192,7 +190,7 @@ app.setHandler({
       // handle the bank a million slot
       let data = await executeWinningNumbersSingleAPICall("bankAMillion");
       if (false !== data) {
-        let speech = this.speechBuilder().addT("NUMBERS_BANKMILLION", data).addAudio(tpStinger());
+        let speech = this.speechBuilder().addT("NUMBERS_BANKMILLION", data);
         this.tell(speech);
       } else {
         let speech = this.speechBuilder().addT("NUMBERS_TROUBLE");
@@ -202,7 +200,7 @@ app.setHandler({
       // handle the cash 4 life slot
       let data = await executeWinningNumbersSingleAPICall("cash4Life");
       if (false !== data) {
-        let speech = this.speechBuilder().addT("NUMBERS_CASH4LIFE", data).addAudio(tpStinger());
+        let speech = this.speechBuilder().addT("NUMBERS_CASH4LIFE", data);
         this.tell(speech);
       } else {
         let speech = this.speechBuilder().addT("NUMBERS_TROUBLE");
@@ -253,7 +251,6 @@ app.setHandler({
         // error handling
         speech = this.speechBuilder().addT("NUMBERS_TROUBLE");
       }
-      speech = speech.addAudio(tpStinger());
       this.tell(speech);
     } else if (this.$inputs.lotteryGame.id == "rolling") {
       // handle the rolling slot
@@ -265,12 +262,11 @@ app.setHandler({
           lotteryGame: lotteryGame.value,
         })
         .addT("NUMBERS_GAMES")
-        .addAudio(tpStinger());
       this.tell(speech);
     }
   },
   ListGamesIntent() {
-    this.$speech.addT("LIST_GAMES").addAudio(tpStinger());
+    this.$speech.addT("LIST_GAMES");
     this.tell(this.$speech);
   },
   async RaffleIntent() {
@@ -314,7 +310,6 @@ app.setHandler({
     } else {
       speech = speech.addT("RAFFLE_END");
     }
-    speech = speech.addAudio(tpStinger());
     this.tell(speech);
   },
   NoCanDoIntent() {
@@ -449,19 +444,5 @@ let executeWinningNumbersSingleAPICall = async (responseKey) => {
 };
 
 
-/**
- * Randomly add a tag at the end of speech
- *
- */
-function tpStinger() {
-  let num = (Math.floor(Math.random() * 5) + 1).toString();
-  let stinger = " ";
-  let activateDate = new Date("January 1, 2020 00:00:01");
-  let endDate = new Date("Mar 1, 2021 00:00:01");
-  if (today >= activateDate && today <= endDate) {
-    stinger = "https://virginia-lottery.s3.amazonaws.com/alexa/audio/val-ty-"+ num + ".mp3" ;
-  }
-return stinger;
-}
 
 module.exports = { app };
