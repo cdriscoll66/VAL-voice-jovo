@@ -236,6 +236,7 @@ app.setHandler({
           if (false !== data[k]["numbers"]) {
             speech = speech.addT(speechResponse, {
               numbers: data[k]["numbers"],
+              fireball: data[k]["fireBall"],
               date: data[k]["drawdate"],
               time: data[k]["drawtime"],
             });

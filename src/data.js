@@ -52,12 +52,23 @@ let getWinningNumbersData = async (gameKey) => {
         tmp[k]["numbers"] = filterKeys(data["results"][gameKey][k], /^N/);
         if (tmp[k]["numbers"].length > 0) {
           // format the numbers
-          tmp[k]["numbers"] = tmp[k]["numbers"]
-            .join(", ")
-            .replace(/,(?=[^,]+$)/, ", and ");
+
+          // Pre Fireball updates
+          // tmp[k]["numbers"] = tmp[k]["numbers"]
+
+            // .join(", ")
+            // .replace(/,(?=[^,]+$)/, ", and ");
+
+            // Post Fireball Updates
+            tmp[k]["numbers"] = tmp[k]["numbers"]
+            tmp[k]["fireBall"] = tmp[k]["numbers"].pop();
+            tmp[k]["numbers"] = tmp[k]["numbers"].join(", ");
+
+
         } else {
           // return false if we don't have any numbers
           tmp[k]["numbers"] = false;
+
         }
 
         // get draw date as a string
