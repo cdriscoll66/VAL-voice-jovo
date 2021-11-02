@@ -275,8 +275,8 @@ app.setHandler({
     // init speech
     let speech = this.speechBuilder();
 
-    let raffleStartDate = new Date("November 03, 2020 00:00:01");
-    let raffleEndDate = new Date("January 01, 2021 00:00:01");
+    let raffleStartDate = new Date("November 01, 2021 00:00:01");
+    let raffleEndDate = new Date("January 01, 2022 00:00:01");
 
     if (today <= raffleEndDate && today >= raffleStartDate) {
       // check for valid data
