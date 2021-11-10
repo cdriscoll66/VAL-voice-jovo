@@ -122,7 +122,6 @@ app.setHandler({
     }
     // handle various draw times
     if (this.$inputs.lotteryGame.id == "powerball") {
-      console.log("Conor here!");
       this.tell(this.speechBuilder().addT("DRAWING_POWERBALL"));
     } else if (this.$inputs.lotteryGame.id == "megamillion") {
       this.tell(this.speechBuilder().addT("DRAWING_MEGAMILLIONS"));
@@ -260,12 +259,47 @@ app.setHandler({
       // handle the rolling slot
       this.tell(this.t("NUMBERS_ROLLINGJACKPOT"));
     } else if (this.$inputs.lotteryGame.id == "cashpop") {
-
-
+      // handle cashpop full list
       let data = await lotteryData.getWinningNumbersData("cashPop");
-      let speech = this.speechBuilder().addT("NUMBERS_CASHPOP", data);
-      this.tell(speech);;
+      let speech = this.speechBuilder()
+        .addT("NUMBERS_CASHPOP", data)
+        .addT("NUMBERS_CASHPOP_OUTRO");
+      this.tell(speech);
+    } else if ([
+      "cashpopafter",
+      "cashpopprime",
+      "cashpoprush",
+      "cashpoplunch",
+      "cashpopcoffee",
+    ].includes(this.$inputs.lotteryGame.id)) {
+      let responseKey,
+        speechResponse = "";
+      switch (this.$inputs.lotteryGame.id) {
+        case "cashpopcoffee":
+          responseKey = "draw1";
+          speechResponse = "NUMBERS_CASHPOP_COFFEE_BREAK";
+          break;
+        case "cashpoplunch":
+          responseKey = "draw2";
+          speechResponse = "NUMBERS_CASHPOP_LUNCH_BREAK";
+          break;
+        case "cashpoprush":
+          responseKey = "draw3";
+          speechResponse = "NUMBERS_CASHPOP_RUSH_HOUR";
+          break;
+        case "cashpopprime":
+          responseKey = "draw4";
+          speechResponse = "NUMBERS_CASHPOP_PRIME_TIME";
+          break;
+        case "cashpopafter":
+          responseKey = "draw5";
+          speechResponse = "NUMBERS_CASHPOP_AFTER_HOURS";
+          break;
+      }
 
+      let data = await lotteryData.getWinningNumbersData(responseKey);
+      let speech = this.speechBuilder().addT(speechResponse, data);
+      this.tell(speech);
     } else {
       // Give a warning message for any other value of lotteryGame slot
       let speech = this.speechBuilder()
