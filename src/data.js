@@ -9,7 +9,10 @@ const parser = require("xml2json");
 let getJackpotData = async () => {
   // endpoint
   // let lotteryXMLEndpoint = "https://valottery.com/jackpots.xml";
-  let lotteryXMLEndpoint = "https://valottery.com/resulttable.xml";
+  // let lotteryXMLEndpoint = "https://valottery.com/resulttable.xml";
+  // Temporary test endpoint
+  let lotteryXMLEndpoint =
+    "https://dev-churchhill.pantheonsite.io/resultTable_CASHPOP.xml";
   try {
     let res = await axios({
       url: lotteryXMLEndpoint,
@@ -40,9 +43,21 @@ let getWinningNumbersData = async (gameKey) => {
   let data = await fetchWinningNumbersData();
   // if the data comes through for our key return it
   if (false !== data && gameKey in data["results"]) {
-    let tmp = {};
 
-    if ("draw1" in data["results"][gameKey]) {
+
+    let tmp = {};
+    if (gameKey == "cashPop") {
+      let k;
+      let cashPopResults = data["results"]["cashPop"];
+      tmp["numbers"] = [];
+      tmp["date"] = new Date(data["results"]["cashPop"]["draw1"]["drawdate"]);
+      for (k in cashPopResults) {
+        let num = cashPopResults[k]["N1"];
+        tmp["numbers"].push(num);
+      }
+      tmp["numbers"] = tmp["numbers"].toString();
+    }
+    else if ("draw1" in data["results"][gameKey]) {
       let k;
       // handle multiple drawings
       for (k in data["results"][gameKey]) {
@@ -56,19 +71,16 @@ let getWinningNumbersData = async (gameKey) => {
           // Pre Fireball updates
           // tmp[k]["numbers"] = tmp[k]["numbers"]
 
-            // .join(", ")
-            // .replace(/,(?=[^,]+$)/, ", and ");
+          // .join(", ")
+          // .replace(/,(?=[^,]+$)/, ", and ");
 
-            // Post Fireball Updates
-            tmp[k]["numbers"] = tmp[k]["numbers"]
-            tmp[k]["fireBall"] = tmp[k]["numbers"].pop();
-            tmp[k]["numbers"] = tmp[k]["numbers"].join(", ");
-
-
+          // Post Fireball Updates
+          tmp[k]["numbers"] = tmp[k]["numbers"];
+          tmp[k]["fireBall"] = tmp[k]["numbers"].pop();
+          tmp[k]["numbers"] = tmp[k]["numbers"].join(", ");
         } else {
           // return false if we don't have any numbers
           tmp[k]["numbers"] = false;
-
         }
 
         // get draw date as a string
@@ -160,8 +172,10 @@ let getRollingJackpotData = async () => {
  */
 let fetchWinningNumbersData = async () => {
   // endpoint
-  let lotteryXMLEndpoint = "https://valottery.com/resulttable.xml";
-
+  // let lotteryXMLEndpoint = "https://valottery.com/resulttable.xml";
+  //temporary server to check off of.
+  let lotteryXMLEndpoint =
+    "https://dev-churchhill.pantheonsite.io/resultTable_CASHPOP.xml";
   try {
     let res = await axios({
       url: lotteryXMLEndpoint,

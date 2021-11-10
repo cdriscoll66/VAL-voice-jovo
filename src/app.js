@@ -96,7 +96,8 @@ app.setHandler({
         } else {
           let speech = this.speechBuilder().addT(
             "JACKPOT_ROLLINGJACKPOT",
-            data);
+            data
+          );
           this.tell(speech);
         }
       } else {
@@ -121,7 +122,7 @@ app.setHandler({
     }
     // handle various draw times
     if (this.$inputs.lotteryGame.id == "powerball") {
-      console.log('Conor here!');
+      console.log("Conor here!");
       this.tell(this.speechBuilder().addT("DRAWING_POWERBALL"));
     } else if (this.$inputs.lotteryGame.id == "megamillion") {
       this.tell(this.speechBuilder().addT("DRAWING_MEGAMILLIONS"));
@@ -137,6 +138,8 @@ app.setHandler({
       this.tell(this.speechBuilder().addT("DRAWING_PICK3"));
     } else if (this.$inputs.lotteryGame.id == "rolling") {
       this.tell(this.speechBuilder().addT("DRAWING_ROLLINGJACKPOT"));
+    } else if (this.$inputs.lotteryGame.id == "cashpop") {
+      this.tell(this.speechBuilder().addT("DRAWING_CASHPOP"));
     } else {
       // Give a warning message for any other value of lotteryGame slot
       let speech = this.speechBuilder()
@@ -256,13 +259,20 @@ app.setHandler({
     } else if (this.$inputs.lotteryGame.id == "rolling") {
       // handle the rolling slot
       this.tell(this.t("NUMBERS_ROLLINGJACKPOT"));
+    } else if (this.$inputs.lotteryGame.id == "cashpop") {
+
+
+      let data = await lotteryData.getWinningNumbersData("cashPop");
+      let speech = this.speechBuilder().addT("NUMBERS_CASHPOP", data);
+      this.tell(speech);;
+
     } else {
       // Give a warning message for any other value of lotteryGame slot
       let speech = this.speechBuilder()
         .addT("NUMBERS_INVALID", {
           lotteryGame: lotteryGame.value,
         })
-        .addT("NUMBERS_GAMES")
+        .addT("NUMBERS_GAMES");
       this.tell(speech);
     }
   },
@@ -443,7 +453,5 @@ let executeWinningNumbersSingleAPICall = async (responseKey) => {
     return false;
   }
 };
-
-
 
 module.exports = { app };
