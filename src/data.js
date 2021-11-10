@@ -43,21 +43,28 @@ let getWinningNumbersData = async (gameKey) => {
   let data = await fetchWinningNumbersData();
   // if the data comes through for our key return it
   if (false !== data && gameKey in data["results"]) {
-
-
     let tmp = {};
     if (gameKey == "cashPop") {
       let k;
       let cashPopResults = data["results"]["cashPop"];
-      tmp["numbers"] = [];
-      tmp["date"] = new Date(data["results"]["cashPop"]["draw1"]["drawdate"]);
+      tmp["numbers"] = "";
+      tmp["date"] = new Date(
+        data["results"]["cashPop"]["draw1"]["drawdate"]
+      ).toDateString();
+      let i = 0
+      let lngth = Object.keys(cashPopResults).length
       for (k in cashPopResults) {
-        let num = cashPopResults[k]["N1"];
-        tmp["numbers"].push(num);
+        let num = cashPopResults[k]["N1"].toString();
+        if (i === (lngth - 1)) {
+          tmp["numbers"] += "and ";
+          tmp["numbers"] += num;
+        } else {
+          tmp["numbers"] += num;
+          tmp["numbers"] += ", ";
+        }
+        i++;
       }
-      tmp["numbers"] = tmp["numbers"].toString();
-    }
-    else if ("draw1" in data["results"][gameKey]) {
+    } else if ("draw1" in data["results"][gameKey]) {
       let k;
       // handle multiple drawings
       for (k in data["results"][gameKey]) {
