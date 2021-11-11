@@ -116,6 +116,7 @@ let getWinningNumbersData = async (gameKey) => {
 
   } else if (false !== data && gameKey in data["results"]["cashPop"]){
       tmp["number"] = data["results"]["cashPop"][gameKey]["N1"]
+      tmp["drawtime"] = data["results"]["cashPop"][gameKey]["drawtime"]
       tmp["date"] = new Date(
         data["results"]["cashPop"][gameKey]["drawdate"]
       ).toDateString();

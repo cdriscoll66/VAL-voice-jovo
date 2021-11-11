@@ -105,6 +105,17 @@ app.setHandler({
         let speech = this.speechBuilder().addT("JACKPOT_TROUBLE");
         this.tell(speech);
       }
+    } else if ([
+      "cashpop",
+      "cashpopafter",
+      "cashpopprime",
+      "cashpoprush",
+      "cashpoplunch",
+      "cashpopcoffee",
+    ].includes(this.$inputs.lotteryGame.id)
+  ) {
+    let speech = this.speechBuilder().addT("JACKPOT_CASHPOP").addT("NUMBERS_CASHPOP_OUTRO");
+    this.tell(speech);
     } else {
       // Give a warning message for any other value of lotteryGame slot
       let speech = this.speechBuilder().addT("JACKPOT_INVALID", {
@@ -265,13 +276,15 @@ app.setHandler({
         .addT("NUMBERS_CASHPOP", data)
         .addT("NUMBERS_CASHPOP_OUTRO");
       this.tell(speech);
-    } else if ([
-      "cashpopafter",
-      "cashpopprime",
-      "cashpoprush",
-      "cashpoplunch",
-      "cashpopcoffee",
-    ].includes(this.$inputs.lotteryGame.id)) {
+    } else if (
+      [
+        "cashpopafter",
+        "cashpopprime",
+        "cashpoprush",
+        "cashpoplunch",
+        "cashpopcoffee",
+      ].includes(this.$inputs.lotteryGame.id)
+    ) {
       let responseKey,
         speechResponse = "";
       switch (this.$inputs.lotteryGame.id) {
@@ -298,7 +311,13 @@ app.setHandler({
       }
 
       let data = await lotteryData.getWinningNumbersData(responseKey);
-      let speech = this.speechBuilder().addT(speechResponse, data);
+      let speech = this.speechBuilder();
+      if (data["number"] === undefined) {
+        speech.addT("NUMBERS_CASHPOP_NOTDRAWN", data);
+        speech.addT("NUMBERS_CASHPOP_OUTRO");
+      } else {
+        speech.addT(speechResponse, data);
+      }
       this.tell(speech);
     } else {
       // Give a warning message for any other value of lotteryGame slot
