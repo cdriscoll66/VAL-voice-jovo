@@ -3,35 +3,35 @@
 const axios = require("axios");
 const parser = require("xml2json");
 
-/**
- * Async function that returns jackpot info
- */
-let getJackpotData = async () => {
-  // endpoint
-  // let lotteryXMLEndpoint = "https://valottery.com/jackpots.xml";
-  // let lotteryXMLEndpoint = "https://valottery.com/resulttable.xml";
-  // Temporary test endpoint
-  let lotteryXMLEndpoint =
-    "https://dev-churchhill.pantheonsite.io/resultTable_CASHPOP.xml";
-  try {
-    let res = await axios({
-      url: lotteryXMLEndpoint,
-      method: "get",
-      timeout: 8000,
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
-    if (res.status == 200) {
-      // Don't forget to return something
-      return parseXMLData(res.data);
-    }
-  } catch (err) {
-    console.error(err);
-  }
+// /**
+//  * Async function that returns jackpot info
+//  */
+// let getJackpotData = async () => {
+//   // endpoint
+//   // let lotteryXMLEndpoint = "https://valottery.com/jackpots.xml";
+//   // let lotteryXMLEndpoint = "https://valottery.com/resulttable.xml";
+//   // Temporary test endpoint
+//   let lotteryXMLEndpoint =
+//     "https://dev-churchhill.pantheonsite.io/resultTable_CASHPOP.xml";
+//   try {
+//     let res = await axios({
+//       url: lotteryXMLEndpoint,
+//       method: "get",
+//       timeout: 8000,
+//       headers: {
+//         "Content-Type": "application/json",
+//       },
+//     });
+//     if (res.status == 200) {
+//       // Don't forget to return something
+//       return parseXMLData(res.data);
+//     }
+//   } catch (err) {
+//     console.error(err);
+//   }
 
-  return false;
-};
+//   return false;
+// };
 
 /**
  * Async function that returns winning numbers by key
@@ -238,7 +238,6 @@ let filterKeys = (obj, filter) => {
   return values;
 };
 
-module.exports.getJackpotData = getJackpotData;
 module.exports.getWinningNumbersData = getWinningNumbersData;
 module.exports.getRaffleData = getRaffleData;
 module.exports.getRollingJackpotData = getRollingJackpotData;

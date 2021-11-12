@@ -24,6 +24,7 @@ app.use(
 );
 
 const lotteryData = require("./data.js");
+const lotteryJackpotData = require("./data/getJackpotData.js")
 
 // // Add analytics layer
 // app.addBespokenAnalytics("17157472-e0d2-45ea-8670-20f80055be48");
@@ -461,7 +462,7 @@ function formatVal(val) {
  */
 let executeJackpotAPICall = async (responseKey) => {
   // get the jackpot data
-  let jackpotData = await lotteryData.getJackpotData();
+  let jackpotData = await lotteryJackpotData.getJackpotData();
   // check for valid data
   if (
     false !== jackpotData &&
