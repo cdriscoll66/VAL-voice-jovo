@@ -286,33 +286,40 @@ app.setHandler({
       ].includes(this.$inputs.lotteryGame.id)
     ) {
       let responseKey,
-        speechResponse = "";
+        speechResponse,
+        title = "";
       switch (this.$inputs.lotteryGame.id) {
         case "cashpopcoffee":
           responseKey = "draw1";
+          title = "Coffee Break";
           speechResponse = "NUMBERS_CASHPOP_COFFEE_BREAK";
           break;
         case "cashpoplunch":
           responseKey = "draw2";
+          title = "Lunch Break";
           speechResponse = "NUMBERS_CASHPOP_LUNCH_BREAK";
           break;
         case "cashpoprush":
           responseKey = "draw3";
+          title = "Rush Hour";
           speechResponse = "NUMBERS_CASHPOP_RUSH_HOUR";
           break;
         case "cashpopprime":
           responseKey = "draw4";
+          title = "Prime Time";
           speechResponse = "NUMBERS_CASHPOP_PRIME_TIME";
           break;
         case "cashpopafter":
           responseKey = "draw5";
+          title = "After Hours";
           speechResponse = "NUMBERS_CASHPOP_AFTER_HOURS";
           break;
       }
 
       let data = await lotteryData.getWinningNumbersData(responseKey);
+      data["drawtime"] = title;
       let speech = this.speechBuilder();
-      if (data["number"] === undefined) {
+      if (data["number"] === '') {
         speech.addT("NUMBERS_CASHPOP_NOTDRAWN", data);
         speech.addT("NUMBERS_CASHPOP_OUTRO");
       } else {

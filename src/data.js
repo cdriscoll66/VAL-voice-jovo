@@ -11,8 +11,9 @@ let getJackpotData = async () => {
   // let lotteryXMLEndpoint = "https://valottery.com/jackpots.xml";
   // let lotteryXMLEndpoint = "https://valottery.com/resulttable.xml";
   // Temporary test endpoint
-  let lotteryXMLEndpoint =
-    "https://dev-churchhill.pantheonsite.io/resultTable_CASHPOP.xml";
+  // let lotteryXMLEndpoint = "https://dev-churchhill.pantheonsite.io/resultTable_CASHPOP.xml";
+  let lotteryXMLEndpoint = 'https://cdnqa.valottery.com/handler/resultTable.xml';
+
   try {
     let res = await axios({
       url: lotteryXMLEndpoint,
@@ -46,24 +47,24 @@ let getWinningNumbersData = async (gameKey) => {
   if (false !== data && gameKey in data["results"]) {
     if (gameKey == "cashPop") {
       let k;
+      let cashPopLiveResults = [];
       let cashPopResults = data["results"]["cashPop"];
       tmp["numbers"] = "";
       tmp["date"] = new Date(
         data["results"]["cashPop"]["draw1"]["drawdate"]
       ).toDateString();
       let i = 0;
-      let lngth = Object.keys(cashPopResults).length;
+
       for (k in cashPopResults) {
-        let num = cashPopResults[k]["N1"].toString();
-        if (i === lngth - 1) {
-          tmp["numbers"] += "and ";
-          tmp["numbers"] += num;
-        } else {
-          tmp["numbers"] += num;
-          tmp["numbers"] += ", ";
-        }
+        let num = cashPopResults[k]["N1"];
+        if (num !== ''){
+          cashPopLiveResults.push(num);
+      }
         i++;
       }
+      tmp["numbers"] = cashPopLiveResults
+          .join(", ")
+          .replace(/,(?=[^,]+$)/, ", and ");
     }
     else if ("draw1" in data["results"][gameKey]) {
       let k;
@@ -116,7 +117,6 @@ let getWinningNumbersData = async (gameKey) => {
 
   } else if (false !== data && gameKey in data["results"]["cashPop"]){
       tmp["number"] = data["results"]["cashPop"][gameKey]["N1"]
-      tmp["drawtime"] = data["results"]["cashPop"][gameKey]["drawtime"]
       tmp["date"] = new Date(
         data["results"]["cashPop"][gameKey]["drawdate"]
       ).toDateString();
@@ -159,7 +159,6 @@ let getRaffleData = async () => {
 let getRollingJackpotData = async () => {
   // endpoint
   let lotteryXMLEndpoint = "https://valottery.com/rollingjackpot.xml";
-  console.log("pullingdata");
   try {
     let res = await axios({
       url: lotteryXMLEndpoint,
@@ -187,8 +186,8 @@ let fetchWinningNumbersData = async () => {
   // endpoint
   // let lotteryXMLEndpoint = "https://valottery.com/resulttable.xml";
   //temporary server to check off of.
-  let lotteryXMLEndpoint =
-    "https://dev-churchhill.pantheonsite.io/resultTable_CASHPOP.xml";
+  // let lotteryXMLEndpoint = "https://dev-churchhill.pantheonsite.io/resultTable_CASHPOP-1.xml";
+  let lotteryXMLEndpoint = 'https://cdnqa.valottery.com/handler/resultTable.xml';
   try {
     let res = await axios({
       url: lotteryXMLEndpoint,
@@ -241,4 +240,4 @@ let filterKeys = (obj, filter) => {
 module.exports.getJackpotData = getJackpotData;
 module.exports.getWinningNumbersData = getWinningNumbersData;
 module.exports.getRaffleData = getRaffleData;
-module.exports.getRollingJackpotData = getRollingJackpotData;
+module.exports.getRollingJackpotfData = getRollingJackpotData;
