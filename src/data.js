@@ -9,10 +9,7 @@ const parser = require("xml2json");
 let getJackpotData = async () => {
   // endpoint
   // let lotteryXMLEndpoint = "https://valottery.com/jackpots.xml";
-  // let lotteryXMLEndpoint = "https://valottery.com/resulttable.xml";
-  // Temporary test endpoint
-  // let lotteryXMLEndpoint = "https://dev-churchhill.pantheonsite.io/resultTable_CASHPOP.xml";
-  let lotteryXMLEndpoint = 'https://cdnqa.valottery.com/handler/resultTable.xml';
+  let lotteryXMLEndpoint = "https://valottery.com/resulttable.xml";
 
   try {
     let res = await axios({
@@ -184,10 +181,8 @@ let getRollingJackpotData = async () => {
  */
 let fetchWinningNumbersData = async () => {
   // endpoint
-  // let lotteryXMLEndpoint = "https://valottery.com/resulttable.xml";
-  //temporary server to check off of.
-  // let lotteryXMLEndpoint = "https://dev-churchhill.pantheonsite.io/resultTable_CASHPOP-1.xml";
-  let lotteryXMLEndpoint = 'https://cdnqa.valottery.com/handler/resultTable.xml';
+  let lotteryXMLEndpoint = "https://valottery.com/resulttable.xml";
+
   try {
     let res = await axios({
       url: lotteryXMLEndpoint,
