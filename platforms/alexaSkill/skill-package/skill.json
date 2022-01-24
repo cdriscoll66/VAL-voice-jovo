@@ -2,10 +2,6 @@
 	"manifest": {
 		"apis": {
 			"custom": {
-				"endpoint": {
-					"sslCertificateType": "Wildcard",
-					"uri": "arn:aws:lambda:us-east-1:818943587759:function:VALotterySkillDev"
-				},
 				"interfaces": []
 			}
 		},
@@ -43,9 +39,9 @@
 						"chance",
 						"winning"
 					],
-					"largeIconUri": "https://s3.amazonaws.com/CAPS-SSE/echo_developer/5e92/eecd9a8c854a424b9d5c32a29a2569a3/APP_ICON_LARGE?versionId=qZSPBFi2ZCaPa_ISTsLKObTItxxe.Jwl&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Date=20201028T124107Z&X-Amz-SignedHeaders=host&X-Amz-Expires=86400&X-Amz-Credential=AKIAWBV6LQ4QHAYALYJ7%2F20201028%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Signature=7cdd5c8b202a59dea9c8242edcbffd04c9c9055755af6ac88d94b082bc1ea534",
+					"largeIconUri": "https://s3.amazonaws.com/CAPS-SSE/echo_developer/5e92/eecd9a8c854a424b9d5c32a29a2569a3/APP_ICON_LARGE?versionId=qZSPBFi2ZCaPa_ISTsLKObTItxxe.Jwl&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Date=20220124T204735Z&X-Amz-SignedHeaders=host&X-Amz-Expires=86400&X-Amz-Credential=AKIAWBV6LQ4QPV37D3RK%2F20220124%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Signature=3a8a4cca0ff6ce892b8911fc8bdf304cafe622f514cb0ba9fc98e907d5e1d3d7",
 					"name": "Virginia Lottery",
-					"smallIconUri": "https://s3.amazonaws.com/CAPS-SSE/echo_developer/a60a/2a9e391adf3b4f78bb029502c3b8789d/APP_ICON?versionId=sOAqj18PazXfPSqu84kMolyBjzWy_DNs&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Date=20201028T124106Z&X-Amz-SignedHeaders=host&X-Amz-Expires=86400&X-Amz-Credential=AKIAWBV6LQ4QHAYALYJ7%2F20201028%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Signature=ffc1f833bd04d25bfebb28ff389fac5478db691df5ea1f3a9cab68b968a642e1",
+					"smallIconUri": "https://s3.amazonaws.com/CAPS-SSE/echo_developer/a60a/2a9e391adf3b4f78bb029502c3b8789d/APP_ICON?versionId=sOAqj18PazXfPSqu84kMolyBjzWy_DNs&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Date=20220124T204735Z&X-Amz-SignedHeaders=host&X-Amz-Expires=86400&X-Amz-Credential=AKIAWBV6LQ4QPV37D3RK%2F20220124%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Signature=7eed6c7c2c2bfeb963534e012b2497d167b805de12fc2732c09864cfbdf5e352",
 					"summary": "Virginia Lottery draw-game information including drawing dates and times, winning numbers and jackpot amounts for games from Pick 3 to Mega Millions."
 				}
 			},
