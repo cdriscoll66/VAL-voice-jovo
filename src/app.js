@@ -96,7 +96,8 @@ app.setHandler({
         } else {
           let speech = this.speechBuilder().addT(
             "JACKPOT_ROLLINGJACKPOT",
-            data);
+            data
+          );
           this.tell(speech);
         }
       } else {
@@ -104,6 +105,17 @@ app.setHandler({
         let speech = this.speechBuilder().addT("JACKPOT_TROUBLE");
         this.tell(speech);
       }
+    } else if ([
+      "cashpop",
+      "cashpopafter",
+      "cashpopprime",
+      "cashpoprush",
+      "cashpoplunch",
+      "cashpopcoffee",
+    ].includes(this.$inputs.lotteryGame.id)
+  ) {
+    let speech = this.speechBuilder().addT("JACKPOT_CASHPOP").addT("NUMBERS_CASHPOP_OUTRO");
+    this.tell(speech);
     } else {
       // Give a warning message for any other value of lotteryGame slot
       let speech = this.speechBuilder().addT("JACKPOT_INVALID", {
@@ -121,7 +133,6 @@ app.setHandler({
     }
     // handle various draw times
     if (this.$inputs.lotteryGame.id == "powerball") {
-      console.log('Conor here!');
       this.tell(this.speechBuilder().addT("DRAWING_POWERBALL"));
     } else if (this.$inputs.lotteryGame.id == "megamillion") {
       this.tell(this.speechBuilder().addT("DRAWING_MEGAMILLIONS"));
@@ -137,6 +148,8 @@ app.setHandler({
       this.tell(this.speechBuilder().addT("DRAWING_PICK3"));
     } else if (this.$inputs.lotteryGame.id == "rolling") {
       this.tell(this.speechBuilder().addT("DRAWING_ROLLINGJACKPOT"));
+    } else if (this.$inputs.lotteryGame.id == "cashpop") {
+      this.tell(this.speechBuilder().addT("DRAWING_CASHPOP"));
     } else {
       // Give a warning message for any other value of lotteryGame slot
       let speech = this.speechBuilder()
@@ -256,13 +269,70 @@ app.setHandler({
     } else if (this.$inputs.lotteryGame.id == "rolling") {
       // handle the rolling slot
       this.tell(this.t("NUMBERS_ROLLINGJACKPOT"));
+    } else if (this.$inputs.lotteryGame.id == "cashpop") {
+      // handle cashpop full list
+      let data = await lotteryData.getWinningNumbersData("cashPop");
+      let speech = this.speechBuilder()
+        .addT("NUMBERS_CASHPOP", data)
+        .addT("NUMBERS_CASHPOP_OUTRO");
+      this.tell(speech);
+    } else if (
+      [
+        "cashpopafter",
+        "cashpopprime",
+        "cashpoprush",
+        "cashpoplunch",
+        "cashpopcoffee",
+      ].includes(this.$inputs.lotteryGame.id)
+    ) {
+      let responseKey,
+        speechResponse,
+        title = "";
+      switch (this.$inputs.lotteryGame.id) {
+        case "cashpopcoffee":
+          responseKey = "draw1";
+          title = "Coffee Break";
+          speechResponse = "NUMBERS_CASHPOP_COFFEE_BREAK";
+          break;
+        case "cashpoplunch":
+          responseKey = "draw2";
+          title = "Lunch Break";
+          speechResponse = "NUMBERS_CASHPOP_LUNCH_BREAK";
+          break;
+        case "cashpoprush":
+          responseKey = "draw3";
+          title = "Rush Hour";
+          speechResponse = "NUMBERS_CASHPOP_RUSH_HOUR";
+          break;
+        case "cashpopprime":
+          responseKey = "draw4";
+          title = "Prime Time";
+          speechResponse = "NUMBERS_CASHPOP_PRIME_TIME";
+          break;
+        case "cashpopafter":
+          responseKey = "draw5";
+          title = "After Hours";
+          speechResponse = "NUMBERS_CASHPOP_AFTER_HOURS";
+          break;
+      }
+
+      let data = await lotteryData.getWinningNumbersData(responseKey);
+      data["drawtime"] = title;
+      let speech = this.speechBuilder();
+      if (data["number"] === '') {
+        speech.addT("NUMBERS_CASHPOP_NOTDRAWN", data);
+        speech.addT("NUMBERS_CASHPOP_OUTRO");
+      } else {
+        speech.addT(speechResponse, data);
+      }
+      this.tell(speech);
     } else {
       // Give a warning message for any other value of lotteryGame slot
       let speech = this.speechBuilder()
         .addT("NUMBERS_INVALID", {
           lotteryGame: lotteryGame.value,
         })
-        .addT("NUMBERS_GAMES")
+        .addT("NUMBERS_GAMES");
       this.tell(speech);
     }
   },
@@ -443,7 +513,5 @@ let executeWinningNumbersSingleAPICall = async (responseKey) => {
     return false;
   }
 };
-
-
 
 module.exports = { app };
