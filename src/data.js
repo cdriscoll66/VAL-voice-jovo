@@ -235,4 +235,4 @@ let filterKeys = (obj, filter) => {
 module.exports.getJackpotData = getJackpotData;
 module.exports.getWinningNumbersData = getWinningNumbersData;
 module.exports.getRaffleData = getRaffleData;
-module.exports.getRollingJackpotfData = getRollingJackpotData;
+module.exports.getRollingJackpotData = getRollingJackpotData;
