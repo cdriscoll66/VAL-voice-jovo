@@ -25,9 +25,9 @@
     "bundle": "gulp --gulpfile node_modules/jovo-framework/gulpfile.js --cwd ./",
     "start": "cd src && node index.js --webhook",
     "launch": "npm start -- --launch",
-    "sync:prod": "jovo get alexaSkill --skill-id amzn1.ask.skill.12319b98-d653-486d-bee4-9a8d5b85dc3c && jovo build -p alexaSkill --reverse",
-    "deploy:prod": "docker-compose up --build && jovo build --stage prod && jovo deploy --stage prod",
-    "deploy:dev": "docker-compose up --build && jovo build --stage dev && jovo deploy --stage dev"
+    "sync:prod": "jovo3 get alexaSkill --skill-id amzn1.ask.skill.12319b98-d653-486d-bee4-9a8d5b85dc3c && jovo build -p alexaSkill --reverse",
+    "deploy:prod": "docker-compose up --build && jovo3 build --stage prod && jovo3 deploy --stage prod",
+    "deploy:dev": "docker-compose up --build && jovo3 build --stage dev && jovo3 deploy --stage dev"
   },
   "repository": {
     "type": "git",
