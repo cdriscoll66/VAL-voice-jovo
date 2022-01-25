@@ -2,320 +2,10 @@
 	"interactionModel": {
 		"languageModel": {
 			"invocationName": "virginia lottery",
-			"intents": [
-				{
-					"name": "JackpotIntent",
-					"slots": [
-						{
-							"name": "lotteryGame",
-							"type": "VirginiaLotteryGame",
-							"samples": [
-								"{lotteryGame}",
-								"tell me about {lotteryGame}",
-								"jackpot for {lotteryGame}",
-								"{lotteryGame} jackpot"
-							]
-						}
-					],
-					"samples": [
-						"what is the jackpot at",
-						"for the jackpot for {lotteryGame}",
-						"for jackpot information on {lotteryGame}",
-						"for the jackpot ",
-						"what is the payout for {lotteryGame}",
-						"what is the jackpot for {lotteryGame}",
-						"what is the prize for {lotteryGame}",
-						"how much can i win if i play {lotteryGame}",
-						"how much is the jackpot for {lotteryGame}",
-						"how much is the prize for {lotteryGame}",
-						"how much is the payout for {lotteryGame}",
-						"what is the {lotteryGame} jackpot",
-						"what is the {lotteryGame} payout",
-						"what is the {lotteryGame} prize",
-						"what is the {lotteryGame} winnings",
-						"what are the {lotteryGame} winnings",
-						"{lotteryGame} prize",
-						"{lotteryGame} payout",
-						"{lotteryGame} jackpot",
-						"{lotteryGame} winnings",
-						"what are the winnings for {lotteryGame}",
-						"what is the jackpot",
-						"how much can i win",
-						"what is the prize",
-						"whats the prize",
-						"what is the largest jackpot",
-						"what is the largest jackpot coming up",
-						"what is the current jackpot"
-					]
-				},
-				{
-					"name": "ListGamesIntent",
-					"slots": [],
-					"samples": [
-						"to tell me more about games",
-						"Tell me more about games",
-						"games list",
-						"which games can you tell me about",
-						"list games",
-						"list all lottery games",
-						"what are the lottery games",
-						"what games are available from the lottery",
-						"what games are available",
-						"what lottery games are available",
-						"what games can i play",
-						"what lottery games can i play",
-						"what games are available to play",
-						"what lottery games are available to play",
-						"what are the current lottery games",
-						"list all games",
-						"what game can i play today",
-						"list all possible games"
-					]
-				},
-				{
-					"name": "NextDrawingIntent",
-					"slots": [
-						{
-							"name": "lotteryGame",
-							"type": "VirginiaLotteryGame",
-							"samples": [
-								"{lotteryGame}",
-								"drawings for {lotteryGame}",
-								"{lotteryGame} drawings",
-								"when is {lotteryGame}",
-								"{lotteryGame} date",
-								"next {lotteryGame}",
-								"tomorrow's {lotteryGame}",
-								"tonight's {lotteryGame}",
-								"today's {lotteryGame}",
-								"{lotteryGame} time"
-							]
-						}
-					],
-					"samples": [
-						"when is the next {lotteryGame}",
-						"when is the next drawing for {lotteryGame}",
-						"when is the next time there is a drawing for {lotteryGame}",
-						"when is te next {lotteryGame}",
-						"when is the next drawing time",
-						"when is the next drawing",
-						"when is the {lotteryGame} drawing",
-						"when is the next {lotteryGame} drawing",
-						"what lottery game has the next drawing",
-						"what game has the next drawing",
-						"what drawings are today"
-					]
-				},
-				{
-					"name": "WinningNumbersIntent",
-					"slots": [
-						{
-							"name": "lotteryGame",
-							"type": "VirginiaLotteryGame",
-							"samples": [
-								"{lotteryGame}",
-								"numbers for {lotteryGame}",
-								"balls for {lotteryGame}",
-								"{lotteryGame} numbers",
-								"winning numbers for {lotteryGame}",
-								"{lotteryGame} winning numbers"
-							]
-						},
-						{
-							"name": "drawingDate",
-							"type": "AMAZON.DATE"
-						},
-						{
-							"name": "relativeDate",
-							"type": "RelativeDate"
-						}
-					],
-					"samples": [
-						"what was the {lotteryGame} number",
-						"what was the {lotteryGame} numbers",
-						"latest number",
-						"what was the number",
-						"what number got drawn",
-						"what number got picked",
-						"what is the  {lotteryGame} winning number",
-						"what was the winning number",
-						"what are the  {lotteryGame} winning number",
-						"{lotteryGame} winning number",
-						"tell me the winning number for {lotteryGame}",
-						"what were the number for {lotteryGame}",
-						"what are the winning number for {lotteryGame}",
-						"what are the winning numbers for {lotteryGame}",
-						"who won {lotteryGame}",
-						"what were the numbers for {lotteryGame}",
-						"what was the drawing for {lotteryGame}",
-						"what was that drawing for {lotteryGame}",
-						"tell me the winning numbers for {lotteryGame}",
-						"{lotteryGame} winning numbers",
-						"tell me the winning numbers",
-						"for the winning numbers",
-						"what are the  {lotteryGame} winning numbers",
-						"tell me the winning numbers for {drawingDate}",
-						"what are the winning number for {relativeDate} {lotteryGame}",
-						"what are the winning number for {relativeDate}",
-						"who won",
-						"what were the winning numbers",
-						"what numbers got picked",
-						"what numbers got drawn",
-						"what were the numbers",
-						"what numbers hit",
-						"what are the winning numbers",
-						"repeat the last winning numbers",
-						"latest numbers",
-						"lastest drawing"
-					]
-				},
-				{
-					"name": "NoCanDoIntent",
-					"slots": [
-						{
-							"name": "lotteryGame",
-							"type": "VirginiaLotteryGame"
-						}
-					],
-					"samples": [
-						"get me the contact info for the virginia lottery",
-						"set an alert for the next drawing",
-						"what are the lottery rules",
-						"what are the rules for {lotteryGame}",
-						"{lotteryGame} rules",
-						"contact information",
-						"phone number",
-						"how do i win",
-						"how do i claim my prize",
-						"where do i claim my prize"
-					]
-				},
-				{
-					"name": "RaffleIntent",
-					"slots": [],
-					"samples": [
-						"holiday raffle info",
-						"new years raffle information",
-						"new years raffle info",
-						"holiday raffle information",
-						"for holiday raffle",
-						"for new years raffle",
-						"new years raffle",
-						"raffle information",
-						"raffle info",
-						"number of tickets",
-						"how many tickets are left for the raffle",
-						"how many tickets are left",
-						"how many raffle tickets are left",
-						"when is the raffle",
-						"when is the raffle drawing",
-						"tell me about the new years raffle",
-						"tell me about the holiday raffle",
-						"tell me about the raffle"
-					]
-				},
-				{
-					"name": "AMAZON.FallbackIntent",
-					"samples": []
-				},
-				{
-					"name": "AMAZON.CancelIntent",
-					"samples": []
-				},
-				{
-					"name": "AMAZON.HelpIntent",
-					"samples": [
-						"for help",
-						"help",
-						"tell me what you can do",
-						"what can you do",
-						"what are my options",
-						"what do you know about"
-					]
-				},
-				{
-					"name": "AMAZON.StopIntent",
-					"samples": []
-				},
-				{
-					"name": "AMAZON.NavigateHomeIntent",
-					"samples": []
-				}
-			],
 			"types": [
 				{
+					"name": "VirginiaLotteryGame",
 					"values": [
-						{
-							"id": "cashpopafter",
-							"name": {
-								"value": "cash pop after hours",
-								"synonyms": [
-									"after hours",
-									"cash pop eleven fifty nine p m",
-									"cash pop late night",
-									"Cash pop midnight",
-									"cash pop night time",
-									"cash pop night"
-								]
-							}
-						},
-						{
-							"id": "cashpopprime",
-							"name": {
-								"value": "cash pop prime time",
-								"synonyms": [
-									"prime time",
-									"cash pop nine p m",
-									"cash pop evening drawing",
-									"cash pop evening"
-								]
-							}
-						},
-						{
-							"id": "cashpoprush",
-							"name": {
-								"value": "cash pop rush hour",
-								"synonyms": [
-									"rush hour",
-									"cash pop five p m",
-									"cash pop afternoon"
-								]
-							}
-						},
-						{
-							"id": "cashpoplunch",
-							"name": {
-								"value": "cash pop lunch break",
-								"synonyms": [
-									"lunch break",
-									"cash pop twelve p m",
-									"cash pop noon",
-									"cash pop lunch",
-									"cash pop noon"
-								]
-							}
-						},
-						{
-							"id": "cashpopcoffee",
-							"name": {
-								"value": "cash pop coffee break",
-								"synonyms": [
-									"coffee break",
-									"cash pop nine a m",
-									"cash pop morning"
-								]
-							}
-						},
-						{
-							"id": "cashpop",
-							"name": {
-								"value": "cashpop",
-								"synonyms": [
-									"pop cash",
-									"cash Pop"
-								]
-							}
-						},
 						{
 							"id": "pick3",
 							"name": {
@@ -411,10 +101,10 @@
 								]
 							}
 						}
-					],
-					"name": "VirginiaLotteryGame"
+					]
 				},
 				{
+					"name": "RelativeDate",
 					"values": [
 						{
 							"id": "yesterday",
@@ -455,10 +145,10 @@
 								]
 							}
 						}
-					],
-					"name": "RelativeDate"
+					]
 				},
 				{
+					"name": "HelpOptions",
 					"values": [
 						{
 							"id": "numbers",
@@ -505,11 +195,279 @@
 								]
 							}
 						}
+					]
+				}
+			],
+			"intents": [
+				{
+					"name": "JackpotIntent",
+					"samples": [
+						"what is the jackpot at",
+						"for the jackpot for {lotteryGame}",
+						"for jackpot information on {lotteryGame}",
+						"for the jackpot ",
+						"what is the payout for {lotteryGame}",
+						"what is the jackpot for {lotteryGame}",
+						"what is the prize for {lotteryGame}",
+						"how much can i win if i play {lotteryGame}",
+						"how much is the jackpot for {lotteryGame}",
+						"how much is the prize for {lotteryGame}",
+						"how much is the payout for {lotteryGame}",
+						"what is the {lotteryGame} jackpot",
+						"what is the {lotteryGame} payout",
+						"what is the {lotteryGame} prize",
+						"what is the {lotteryGame} winnings",
+						"what are the {lotteryGame} winnings",
+						"{lotteryGame} prize",
+						"{lotteryGame} payout",
+						"{lotteryGame} jackpot",
+						"{lotteryGame} winnings",
+						"what are the winnings for {lotteryGame}",
+						"what is the jackpot",
+						"how much can i win",
+						"what is the prize",
+						"whats the prize",
+						"what is the largest jackpot",
+						"what is the largest jackpot coming up",
+						"what is the current jackpot"
 					],
-					"name": "HelpOptions"
+					"slots": [
+						{
+							"name": "lotteryGame",
+							"type": "VirginiaLotteryGame",
+							"samples": [
+								"{lotteryGame}",
+								"tell me about {lotteryGame}",
+								"jackpot for {lotteryGame}",
+								"{lotteryGame} jackpot"
+							]
+						}
+					]
+				},
+				{
+					"name": "ListGamesIntent",
+					"samples": [
+						"to tell me more about games",
+						"Tell me more about games",
+						"games list",
+						"which games can you tell me about",
+						"list games",
+						"list all lottery games",
+						"what are the lottery games",
+						"what games are available from the lottery",
+						"what games are available",
+						"what lottery games are available",
+						"what games can i play",
+						"what lottery games can i play",
+						"what games are available to play",
+						"what lottery games are available to play",
+						"what are the current lottery games",
+						"list all games",
+						"what game can i play today",
+						"list all possible games"
+					],
+					"slots": [
+						{
+							"name": "name",
+							"type": "AMAZON.US_FIRST_NAME"
+						}
+					]
+				},
+				{
+					"name": "NextDrawingIntent",
+					"samples": [
+						"when is the next drawing for {lotteryGame}",
+						"when is the next time there is a drawing for {lotteryGame}",
+						"when is te next {lotteryGame}",
+						"when is the next drawing time",
+						"when is the next drawing",
+						"when is the {lotteryGame} drawing",
+						"when is the next {lotteryGame} drawing",
+						"what lottery game has the next drawing",
+						"what game has the next drawing",
+						"what drawings are today"
+					],
+					"slots": [
+						{
+							"name": "lotteryGame",
+							"type": "VirginiaLotteryGame",
+							"samples": [
+								"{lotteryGame}",
+								"drawings for {lotteryGame}",
+								"{lotteryGame} drawings",
+								"when is {lotteryGame}",
+								"{lotteryGame} date",
+								"next {lotteryGame}",
+								"tomorrow's {lotteryGame}",
+								"tonight's {lotteryGame}",
+								"today's {lotteryGame}",
+								"{lotteryGame} time"
+							]
+						}
+					]
+				},
+				{
+					"name": "WinningNumbersIntent",
+					"samples": [
+						"what are the winning numbers for {lotteryGame}",
+						"who won {lotteryGame}",
+						"what were the numbers for {lotteryGame}",
+						"what was the drawing for {lotteryGame}",
+						"what was that drawing for {lotteryGame}",
+						"tell me the winning numbers for {lotteryGame}",
+						"{lotteryGame} winning numbers",
+						"tell me the winning numbers",
+						"for the winning numbers",
+						"what are the  {lotteryGame} winning numbers",
+						"tell me the winning numbers for {drawingDate}",
+						"what are the winning number for {relativeDate} {lotteryGame}",
+						"what are the winning number for {relativeDate}",
+						"who won",
+						"what were the winning numbers",
+						"what numbers got picked",
+						"what numbers got drawn",
+						"what were the numbers",
+						"what numbers hit",
+						"what are the winning numbers",
+						"repeat the last winning numbers",
+						"latest numbers",
+						"lastest drawing"
+					],
+					"slots": [
+						{
+							"name": "lotteryGame",
+							"type": "VirginiaLotteryGame",
+							"samples": [
+								"{lotteryGame}",
+								"numbers for {lotteryGame}",
+								"balls for {lotteryGame}",
+								"{lotteryGame} numbers",
+								"winning numbers for {lotteryGame}",
+								"{lotteryGame} winning numbers"
+							]
+						},
+						{
+							"name": "drawingDate",
+							"type": "AMAZON.DATE"
+						},
+						{
+							"name": "relativeDate",
+							"type": "RelativeDate"
+						}
+					]
+				},
+				{
+					"name": "NoCanDoIntent",
+					"samples": [
+						"get me the contact info for the virginia lottery",
+						"set an alert for the next drawing",
+						"what are the lottery rules",
+						"what are the rules for {lotteryGame}",
+						"{lotteryGame} rules",
+						"contact information",
+						"phone number",
+						"how do i win",
+						"how do i claim my prize",
+						"where do i claim my prize"
+					],
+					"slots": [
+						{
+							"name": "lotteryGame",
+							"type": "VirginiaLotteryGame"
+						}
+					]
+				},
+				{
+					"name": "RaffleIntent",
+					"samples": [
+						"holiday raffle info",
+						"new years raffle information",
+						"new years raffle info",
+						"holiday raffle information",
+						"for holiday raffle",
+						"for new years raffle",
+						"new years raffle",
+						"raffle information",
+						"raffle info",
+						"number of tickets",
+						"how many tickets are left for the raffle",
+						"how many tickets are left",
+						"how many raffle tickets are left",
+						"when is the raffle",
+						"when is the raffle drawing",
+						"tell me about the new years raffle",
+						"tell me about the holiday raffle",
+						"tell me about the raffle"
+					],
+					"slots": []
+				},
+				{
+					"name": "AMAZON.FallbackIntent",
+					"samples": []
+				},
+				{
+					"name": "AMAZON.CancelIntent",
+					"samples": []
+				},
+				{
+					"name": "AMAZON.HelpIntent",
+					"samples": [
+						"for help",
+						"help",
+						"tell me what you can do",
+						"what can you do",
+						"what are my options",
+						"what do you know about"
+					]
+				},
+				{
+					"name": "AMAZON.StopIntent",
+					"samples": []
+				},
+				{
+					"name": "AMAZON.NavigateHomeIntent",
+					"samples": []
 				}
 			]
 		},
+		"prompts": [
+			{
+				"id": "Elicit.Slot.320892579269.746323110306",
+				"variations": [
+					{
+						"type": "PlainText",
+						"value": "I can tell you the jackpot amount for Print en Play Rolling jackpot, cash five with easy match, mega millions or powerball. Which jackpot would you like to know about?"
+					}
+				]
+			},
+			{
+				"id": "Elicit.Slot.188963521169.576417401057",
+				"variations": [
+					{
+						"type": "PlainText",
+						"value": "I can tell you when the next drawing for a game will happen.  You can say power ball, mega millions, cash for life, bank a million, cash five, pick four, or pick three. Which game would you like to know about?"
+					}
+				]
+			},
+			{
+				"id": "Elicit.Slot.1344866521102.466256502649",
+				"variations": [
+					{
+						"type": "PlainText",
+						"value": "I can tell you the latest winning numbers for a game. You can say power ball, mega millions, cash for life, bank a million, cash five, pick four, or pick three. Which game would you like to know about?"
+					}
+				]
+			},
+			{
+				"id": "Elicit.Slot.356576898512.337909922518",
+				"variations": [
+					{
+						"type": "PlainText",
+						"value": "I can tell you about jackpots, drawing times, winning numbers, and I can list our games. What would you like help with?"
+					}
+				]
+			}
+		],
 		"dialog": {
 			"intents": [
 				{
@@ -576,45 +534,6 @@
 				}
 			],
 			"delegationStrategy": "SKILL_RESPONSE"
-		},
-		"prompts": [
-			{
-				"id": "Elicit.Slot.320892579269.746323110306",
-				"variations": [
-					{
-						"type": "PlainText",
-						"value": "I can tell you the jackpot amount for Print en Play Rolling jackpot, cash five with easy match, mega millions or powerball. Which jackpot would you like to know about?"
-					}
-				]
-			},
-			{
-				"id": "Elicit.Slot.188963521169.576417401057",
-				"variations": [
-					{
-						"type": "PlainText",
-						"value": "I can tell you when the next drawing for a game will happen.  You can say power ball, mega millions, cash for life, bank a million, cash five, pick four, or pick three. Which game would you like to know about?"
-					}
-				]
-			},
-			{
-				"id": "Elicit.Slot.1344866521102.466256502649",
-				"variations": [
-					{
-						"type": "PlainText",
-						"value": "I can tell you the latest winning numbers for a game. You can say power ball, mega millions, cash for life, bank a million, cash five, pick four, or pick three. Which game would you like to know about?"
-					}
-				]
-			},
-			{
-				"id": "Elicit.Slot.356576898512.337909922518",
-				"variations": [
-					{
-						"type": "PlainText",
-						"value": "I can tell you about jackpots, drawing times, winning numbers, and I can list our games. What would you like help with?"
-					}
-				]
-			}
-		]
-	},
-	"version": "165"
+		}
+	}
 }

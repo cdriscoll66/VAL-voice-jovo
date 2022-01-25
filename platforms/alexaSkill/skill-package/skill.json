@@ -2,7 +2,11 @@
 	"manifest": {
 		"apis": {
 			"custom": {
-				"interfaces": []
+				"interfaces": [],
+				"endpoint": {
+					"sslCertificateType": "Wildcard",
+					"uri": "arn:aws:lambda:us-east-1:818943587759:function:VALotterySkillDev"
+				}
 			}
 		},
 		"manifestVersion": "1.0",
